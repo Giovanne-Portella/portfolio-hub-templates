@@ -21,29 +21,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Conteúdo do site começa invisível até JS sinalizar que está pronto */
-#navbar,
-#sections-root,
-#siteFooter,
-#radioPlayer,
-#scrollTopBtn {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* Quando JS remove site-loading e adiciona site-loaded, revela com fade */
+/* Revela conteúdo com fade quando JS sinaliza que está pronto */
 body.site-loaded #navbar,
 body.site-loaded #sections-root,
 body.site-loaded #siteFooter {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.5s ease;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: opacity 0.6s ease;
 }
 
 body.site-loaded #radioPlayer,
 body.site-loaded #scrollTopBtn {
-  opacity: 1;
-  visibility: visible;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 a {

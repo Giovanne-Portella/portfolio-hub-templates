@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Admin CSS -->
-  <link rel="stylesheet" href="../css/admin.css?v=6">
+  <link rel="stylesheet" href="../css/admin.css?v=7">
 
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 </head>
@@ -472,43 +472,61 @@
     <div class="admin-page" id="page-splash">
       <div class="page-header">
         <h1 class="page-title">Modal de Boas-vindas</h1>
-        <p class="page-subtitle">Configure a tela inicial que aparece quando alguém visita seu portfolio pela primeira vez.</p>
+        <p class="page-subtitle">Configure a tela que aparece quando alguém visita seu portfolio pela primeira vez.</p>
         <button class="btn btn-primary" id="saveSplashBtn">
           <i class="fa-solid fa-floppy-disk"></i> Salvar
         </button>
       </div>
 
+      <!-- Ativar -->
+      <div class="admin-card" style="margin-bottom:1.5rem">
+        <div class="form-toggle">
+          <input type="checkbox" id="splashEnabled" style="display:none">
+          <div class="toggle-track" id="splashEnabledTrack"><div class="toggle-thumb"></div></div>
+          <label class="toggle-label" for="splashEnabled">Habilitar modal de boas-vindas</label>
+        </div>
+      </div>
+
+      <!-- Escolha de estilo -->
+      <div class="admin-card" style="margin-bottom:1.5rem">
+        <h3 class="theme-section-title">Estilo</h3>
+        <p class="theme-section-desc" style="margin-bottom:1rem">Escolha a animação de entrada que combina com seu portfolio.</p>
+        <div id="splashStyleGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem"></div>
+      </div>
+
       <div class="theme-editor-grid">
-        <!-- Ativar splash -->
-        <div class="admin-card">
-          <h3 class="theme-section-title">Ativação</h3>
-          <p class="theme-section-desc">Quando ativo, visitantes verão um modal de terminal na primeira visita.</p>
-          <div class="form-toggle" style="margin-top:1rem">
-            <input type="checkbox" id="splashEnabled" style="display:none">
-            <div class="toggle-track" id="splashEnabledTrack">
-              <div class="toggle-thumb"></div>
+        <!-- Campos comuns -->
+        <div class="admin-card" id="splashCommonFields">
+          <h3 class="theme-section-title">Conteúdo</h3>
+          <div class="form">
+            <div class="form-group">
+              <label class="form-label">Seu nome / título</label>
+              <input type="text" class="form-input" id="splashSiteName" placeholder="Ex: João Silva" maxlength="60">
             </div>
-            <label class="toggle-label" for="splashEnabled">Habilitar modal de boas-vindas</label>
+            <div class="form-group">
+              <label class="form-label">Tagline (opcional)</label>
+              <input type="text" class="form-input" id="splashTagline" placeholder="Ex: Músico & Produtor" maxlength="80">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Texto do botão</label>
+              <input type="text" class="form-input" id="splashBtnLabel" placeholder="Entrar" maxlength="40">
+            </div>
           </div>
         </div>
 
-        <!-- Personalização -->
-        <div class="admin-card">
-          <h3 class="theme-section-title">Personalização</h3>
+        <!-- Campos exclusivos Terminal -->
+        <div class="admin-card" id="terminalFields" style="display:none">
+          <h3 class="theme-section-title">Configuração Terminal</h3>
           <div class="form">
             <div class="form-group">
-              <label class="form-label">Título do terminal</label>
+              <label class="form-label">Título da barra</label>
               <input type="text" class="form-input" id="splashTerminalTitle" placeholder="portfolio — bash" maxlength="40">
-              <small style="color:var(--admin-text-2)">Aparece na barra de título do terminal</small>
             </div>
             <div class="form-group">
               <label class="form-label">Linhas de boot (uma por linha)</label>
-              <textarea class="form-input form-textarea" id="splashBootLines" rows="6" placeholder="Iniciando sistema...&#10;Carregando módulos&#10;Sistema pronto"></textarea>
-              <small style="color:var(--admin-text-2)">Cada linha é exibida em sequência. Linhas marcadas com [OK] ficam verdes, [INFO] ficam azuis.</small>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Texto do botão de entrar</label>
-              <input type="text" class="form-input" id="splashBtnLabel" placeholder="[ Pressione Enter ]" maxlength="40">
+              <textarea class="form-input form-textarea" id="splashBootLines" rows="6"
+                placeholder="[ OK ] Iniciando sistema...&#10;[INFO] Carregando&#10;[ OK ] Pronto"></textarea>
+              <small style="color:var(--admin-text-2)">[ OK ] = verde &nbsp;|&nbsp; [INFO] = azul</small>
             </div>
           </div>
         </div>
@@ -517,14 +535,14 @@
       <!-- Preview -->
       <div class="admin-card" style="margin-top:1.5rem">
         <h3 class="theme-section-title">Preview</h3>
-        <div id="splashPreviewWrap" style="background:#010409;border-radius:8px;padding:1rem;margin-top:.75rem;max-width:560px">
-          <div style="background:#161b22;border-radius:6px 6px 0 0;padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #30363d">
-            <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block"></span>
-            <span style="width:12px;height:12px;border-radius:50%;background:#febc2e;display:inline-block"></span>
-            <span style="width:12px;height:12px;border-radius:50%;background:#28c840;display:inline-block"></span>
-            <span id="splashPreviewTitle" style="flex:1;text-align:center;font-size:.7rem;color:#6e7681;font-family:monospace">portfolio — bash</span>
+        <div style="background:#0d1117;border-radius:10px;overflow:hidden;margin-top:.75rem;max-width:520px;min-height:180px">
+          <div style="background:#161b22;padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #30363d">
+            <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block"></span>
+            <span id="splashPreviewTitle" style="flex:1;text-align:center;font-size:.7rem;color:#6e7681;font-family:monospace">preview</span>
           </div>
-          <div id="splashPreviewBody" style="padding:1rem;font-family:monospace;font-size:.78rem;min-height:100px;color:#8b949e"></div>
+          <div id="splashPreviewBody" style="padding:1.25rem;font-family:monospace;font-size:.78rem;min-height:130px;color:#8b949e;display:flex;align-items:center;justify-content:center"></div>
         </div>
       </div>
     </div>
@@ -734,28 +752,28 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Config -->
-  <script src="../js/config.js?v=6"></script>
-  <script src="../js/auth.js?v=6"></script>
+  <script src="../js/config.js?v=7"></script>
+  <script src="../js/auth.js?v=7"></script>
 
   <!-- Utilitários -->
-  <script src="../js/modules/utils.js?v=6"></script>
+  <script src="../js/modules/utils.js?v=7"></script>
 
   <!-- Admin core (toast, loading, modal, uploadFile) -->
-  <script src="../js/admin/core.js?v=6"></script>
+  <script src="../js/admin/core.js?v=7"></script>
 
   <!-- Módulos admin -->
-  <script src="../js/admin/section-builder.js?v=6"></script>
-  <script src="../js/admin/theme-editor.js?v=6"></script>
-  <script src="../js/admin/media-library.js?v=6"></script>
-  <script src="../js/admin/radio-manager.js?v=6"></script>
-  <script src="../js/admin/profile.js?v=6"></script>
-  <script src="../js/admin/gallery-manager.js?v=6"></script>
-  <script src="../js/admin/events-manager.js?v=6"></script>
-  <script src="../js/admin/publications-manager.js?v=6"></script>
-  <script src="../js/admin/services-manager.js?v=6"></script>
-  <script src="../js/admin/splash-manager.js?v=1"></script>
+  <script src="../js/admin/section-builder.js?v=7"></script>
+  <script src="../js/admin/theme-editor.js?v=7"></script>
+  <script src="../js/admin/media-library.js?v=7"></script>
+  <script src="../js/admin/radio-manager.js?v=7"></script>
+  <script src="../js/admin/profile.js?v=7"></script>
+  <script src="../js/admin/gallery-manager.js?v=7"></script>
+  <script src="../js/admin/events-manager.js?v=7"></script>
+  <script src="../js/admin/publications-manager.js?v=7"></script>
+  <script src="../js/admin/services-manager.js?v=7"></script>
+  <script src="../js/admin/splash-manager.js?v=2"></script>
 
   <!-- Entry point admin -->
-  <script src="../js/admin.js?v=6"></script>
+  <script src="../js/admin.js?v=7"></script>
 </body>
 </html>

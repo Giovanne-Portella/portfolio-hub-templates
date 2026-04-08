@@ -21,3 +21,9 @@ ALTER TABLE portfolios
 UPDATE portfolios
 SET feature_flags = feature_flags || '{"splash": false}'::jsonb
 WHERE NOT (feature_flags ? 'splash');
+
+-- ============================================================
+-- MIGRATION v2.1 — thumbnail de vídeo em gallery_items
+-- ============================================================
+ALTER TABLE gallery_items
+  ADD COLUMN IF NOT EXISTS video_thumbnail_url TEXT;

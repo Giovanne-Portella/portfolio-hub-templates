@@ -165,9 +165,12 @@ async function renderGallerySection(el, section, data) {
         </div>`;
       }
       if (media.file_type === 'video') {
+        const vidThumb = item.video_thumbnail_url || media.thumbnail_url || '';
         return `<div class="gallery-item reveal" data-lightbox data-src="${escapeAttr(media.file_url)}" data-type="video" data-caption="${escapeAttr(item.caption || '')}">
           <div class="gallery-item-type"><i class="fa-solid fa-play"></i></div>
-          <img src="${escapeAttr(media.thumbnail_url || '')}" alt="${escapeAttr(item.caption || media.file_name)}" loading="lazy">
+          ${vidThumb
+            ? `<img src="${escapeAttr(vidThumb)}" alt="${escapeAttr(item.caption || media.file_name)}" loading="lazy">`
+            : `<div class="gallery-item-video-placeholder"><i class="fa-solid fa-film"></i></div>`}
           <div class="gallery-item-overlay"><span class="gallery-item-caption">${escapeHtml(item.caption || '')}</span></div>
         </div>`;
       }

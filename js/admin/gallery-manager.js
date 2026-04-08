@@ -23,7 +23,7 @@ async function _fetchGalleries() {
   if (ids.length) {
     const { data: items } = await supabase
       .from('gallery_items')
-      .select('*, media_files(id, file_url, thumbnail_url, file_name, file_type)')
+      .select('*, media_files(id, file_url, thumbnail_url, file_name, file_type), video_thumbnail_url')
       .in('gallery_id', ids)
       .order('display_order');
 
@@ -163,16 +163,32 @@ function _openItemsManager(galleryId) {
     body.innerHTML = items.length ? items.map((item, i) => {
       const mf = item.media_files;
       const isVideo = mf?.file_type === 'video';
-      const thumbUrl = mf?.thumbnail_url || mf?.file_url;
-      const thumbHtml = isVideo
-        ? `<video src="${escapeAttr(mf.file_url)}" class="gallery-thumb-sm" muted preload="metadata" style="object-fit:cover" onloadedmetadata="this.currentTime=1"></video>`
-        : thumbUrl
+      const vidThumb = item.video_thumbnail_url || '';
+
+      let thumbHtml;
+      if (isVideo) {
+        thumbHtml = vidThumb
+          ? `<div class="gallery-thumb-sm" style="position:relative;background:#000">
+               <img src="${escapeAttr(vidThumb)}" style="width:100%;height:100%;object-fit:cover">
+               <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;background:rgba(0,0,0,.3)"><i class="fa-solid fa-play"></i></span>
+             </div>`
+          : `<div class="gallery-thumb-sm" style="background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;font-size:.6rem;color:#666">
+               <i class="fa-solid fa-film" style="font-size:1.2rem"></i>sem capa
+             </div>`;
+      } else {
+        const thumbUrl = mf?.thumbnail_url || mf?.file_url;
+        thumbHtml = thumbUrl
           ? `<img src="${escapeAttr(thumbUrl)}" class="gallery-thumb-sm" alt="">`
           : `<div class="gallery-thumb-sm-placeholder"><i class="fa-solid fa-file"></i></div>`;
+      }
+
       return `
       <div class="gallery-item-row" data-item-id="${escapeAttr(item.id)}">
         ${thumbHtml}
-        <div class="gallery-item-name">${escapeHtml(item.media_files?.file_name || 'Arquivo')}</div>
+        <div class="gallery-item-name">
+          ${escapeHtml(mf?.file_name || 'Arquivo')}
+          ${isVideo ? `<br><button class="btn btn-ghost btn-xs" style="font-size:.65rem;padding:.15rem .4rem;margin-top:.25rem" data-set-thumb="${escapeAttr(item.id)}"><i class="fa-solid fa-image"></i> Definir capa</button>` : ''}
+        </div>
         <input type="text" class="form-input form-input-sm" placeholder="Legenda..." value="${escapeAttr(item.caption || '')}">
         <div class="gallery-item-actions">
           ${i > 0 ? `<button class="btn btn-ghost btn-xs" data-move-up="${escapeAttr(item.id)}" data-gallery="${escapeAttr(galleryId)}"><i class="fa-solid fa-chevron-up"></i></button>` : ''}
@@ -182,8 +198,26 @@ function _openItemsManager(galleryId) {
       </div>`;
     }).join('') : '<div class="track-empty">Nenhum item. Adicione da biblioteca de mídia.</div>';
 
+    // Set video thumbnail
+    body.querySelectorAll('[data-set-thumb]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const itemId = btn.dataset.setThumb;
+        pickMedia('image', async (media) => {
+          const { error } = await supabase.from('gallery_items')
+            .update({ video_thumbnail_url: media.file_url })
+            .eq('id', itemId);
+          if (!error) {
+            const item = (galleryItems[galleryId] || []).find(it => it.id === itemId);
+            if (item) item.video_thumbnail_url = media.file_url;
+            render();
+            showToast('Capa definida!', 'success');
+          }
+        });
+      });
+    });
+
     // Bind caption save
-    body.querySelectorAll('.gallery-item-row input').forEach((input, i) => {
+    body.querySelectorAll('.gallery-item-row input[type="text"]').forEach((input, i) => {
       input.addEventListener('change', async () => {
         const items = galleryItems[galleryId] || [];
         if (items[i]) {
@@ -231,7 +265,7 @@ function _openItemsManager(galleryId) {
         gallery_id: galleryId,
         media_id: media.id,
         display_order: items.length
-      }).select('*, media_files(id, file_url, thumbnail_url, file_name, file_type)').single();
+      }).select('*, media_files(id, file_url, thumbnail_url, file_name, file_type), video_thumbnail_url').single();
 
       if (!error) {
         galleryItems[galleryId] = [...items, data];

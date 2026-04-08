@@ -14,11 +14,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Esconde elementos críticos ANTES de qualquer pintura — evita flash de navbar+footer -->
+  <style>
+    #navbar,#sections-root,#siteFooter,#radioPlayer,#scrollTopBtn{
+      opacity:0!important;visibility:hidden!important;
+    }
+  </style>
 </head>
-<body class="site-loading">
+<body>
 
   <!-- ====================================================
        SPLASH — CSS: .splash / .splash.hidden
@@ -150,15 +157,15 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 
-  <script src="js/config.js?v=9"></script>
-  <script src="js/modules/utils.js?v=9"></script>
-  <script src="js/modules/theme-engine.js?v=9"></script>
-  <script src="js/modules/animations.js?v=9"></script>
-  <script src="js/modules/splash.js?v=9"></script>
-  <script src="js/modules/navbar.js?v=9"></script>
-  <script src="js/modules/section-renderer.js?v=9"></script>
-  <script src="js/modules/music-reactor.js?v=9"></script>
-  <script src="js/modules/radio.js?v=9"></script>
-  <script src="js/portfolio.js?v=9"></script>
+  <script src="js/config.js?v=10"></script>
+  <script src="js/modules/utils.js?v=10"></script>
+  <script src="js/modules/theme-engine.js?v=10"></script>
+  <script src="js/modules/animations.js?v=10"></script>
+  <script src="js/modules/splash.js?v=10"></script>
+  <script src="js/modules/navbar.js?v=10"></script>
+  <script src="js/modules/section-renderer.js?v=10"></script>
+  <script src="js/modules/music-reactor.js?v=10"></script>
+  <script src="js/modules/radio.js?v=10"></script>
+  <script src="js/portfolio.js?v=10"></script>
 </body>
 </html>
