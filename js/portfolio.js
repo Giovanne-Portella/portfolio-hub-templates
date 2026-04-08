@@ -29,8 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else {
     // Limpa localStorage para não ativar splash de "retorno" quando for habilitado depois
     localStorage.removeItem('pt_visited');
-    document.body.classList.remove('site-loading');
-    document.body.classList.add('site-loaded');
+    // site-loaded só é adicionado DEPOIS do render completo (dentro de _afterSplash)
     _afterSplash(portfolio, flags);
   }
 });
@@ -158,6 +157,10 @@ async function _afterSplash(portfolio, flags) {
       intensity: theme.reactorIntensity || 'medium',
     });
   }
+
+  // Revela a página — só aqui, após tudo renderizado, para evitar flash de elementos vazios
+  document.body.classList.remove('site-loading');
+  document.body.classList.add('site-loaded');
 }
 
 function _buildTracks(playlist) {

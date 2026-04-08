@@ -49,8 +49,7 @@ function _enterSite(splash, onEnter) {
   splash.classList.add('hidden');
   setTimeout(() => {
     splash.style.display = 'none';
-    document.body.classList.remove('site-loading');
-    document.body.classList.add('site-loaded');
+    // site-loaded é adicionado dentro de _afterSplash (onEnter) após render completo
     if (typeof onEnter === 'function') onEnter();
   }, 600);
 }
