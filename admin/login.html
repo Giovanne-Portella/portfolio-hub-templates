@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Portfolio Templates</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/admin.css?v=1">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--admin-bg);
+      padding: 1.5rem;
+    }
+
+    .login-wrap {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem;
+      margin-bottom: 2rem;
+      color: var(--admin-text);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .login-logo i {
+      font-size: 1.75rem;
+      color: var(--admin-primary);
+    }
+
+    .login-card {
+      background: var(--admin-surface);
+      border: 1px solid var(--admin-border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .login-card h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+
+    .login-card p.subtitle {
+      color: var(--admin-text-2);
+      font-size: .9rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+
+    .form-footer {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .form-footer a {
+      color: var(--admin-primary);
+      text-decoration: none;
+      font-size: .85rem;
+    }
+
+    .form-footer a:hover { text-decoration: underline; }
+
+    .error-msg {
+      background: rgba(248, 81, 73, .1);
+      color: #f85149;
+      border: 1px solid rgba(248, 81, 73, .3);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+      display: none;
+    }
+
+    .success-msg {
+      background: rgba(63, 185, 80, .1);
+      color: #3fb950;
+      border: 1px solid rgba(63, 185, 80, .3);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+      display: none;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: .85rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      color: var(--admin-text-2);
+      font-size: .8rem;
+    }
+    .divider::before,.divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--admin-border);
+    }
+
+    .tab-btns {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: .5rem;
+      border: 1px solid var(--admin-border);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--admin-text-2);
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .tab-btn.active {
+      background: var(--admin-primary);
+      border-color: var(--admin-primary);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="login-logo">
+      <i class="fa-solid fa-layer-group"></i>
+      Portfolio Templates
+    </div>
+
+    <div class="login-card">
+      <div class="tab-btns">
+        <button class="tab-btn active" id="tabLogin" data-tab="login">Entrar</button>
+        <button class="tab-btn" id="tabRegister" data-tab="register">Criar conta</button>
+      </div>
+
+      <div id="errorMsg" class="error-msg"></div>
+      <div id="successMsg" class="success-msg"></div>
+
+      <!-- Login -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-input" id="loginEmail" placeholder="seu@email.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha</label>
+          <div style="position:relative">
+            <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+            <button type="button" class="btn btn-ghost btn-icon" id="toggleLoginPwd" style="position:absolute;right:.5rem;top:50%;transform:translateY(-50%)" aria-label="Mostrar senha">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-login">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Entrar</span>
+        </button>
+        <div class="form-footer">
+          <a href="#" id="forgotLink">Esqueci a senha</a>
+        </div>
+      </form>
+
+      <!-- Cadastro (oculto) -->
+      <form id="registerForm" style="display:none">
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-input" id="registerEmail" placeholder="seu@email.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha</label>
+          <div style="position:relative">
+            <input type="password" class="form-input" id="registerPassword" placeholder="Mínimo 6 caracteres" required minlength="6" autocomplete="new-password">
+            <button type="button" class="btn btn-ghost btn-icon" id="toggleRegisterPwd" style="position:absolute;right:.5rem;top:50%;transform:translateY(-50%)" aria-label="Mostrar senha">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirmar senha</label>
+          <input type="password" class="form-input" id="registerPasswordConf" placeholder="Repita a senha" required minlength="6" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-login">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Criar conta</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js?v=1"></script>
+  <script>
+    // Tabs
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('loginForm').style.display    = tab.dataset.tab === 'login'    ? '' : 'none';
+        document.getElementById('registerForm').style.display  = tab.dataset.tab === 'register' ? '' : 'none';
+        _clearMessages();
+      });
+    });
+
+    // Toggle password visibility (sem expor dados)
+    function _togglePwd(inputId, btnId) {
+      document.getElementById(btnId).addEventListener('click', () => {
+        const input = document.getElementById(inputId);
+        const btn   = document.getElementById(btnId);
+        const show  = input.type === 'password';
+        input.type  = show ? 'text' : 'password';
+        btn.querySelector('i').className = show ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+      });
+    }
+    _togglePwd('loginPassword', 'toggleLoginPwd');
+    _togglePwd('registerPassword', 'toggleRegisterPwd');
+
+    function _showError(msg) {
+      const el = document.getElementById('errorMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
+      document.getElementById('successMsg').style.display = 'none';
+    }
+
+    function _showSuccess(msg) {
+      const el = document.getElementById('successMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
+      document.getElementById('errorMsg').style.display = 'none';
+    }
+
+    function _clearMessages() {
+      document.getElementById('errorMsg').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'none';
+    }
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      _clearMessages();
+      const btn = e.target.querySelector('button[type=submit]');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Entrando...';
+
+      const email    = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        _showError('E-mail ou senha incorretos.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar';
+      } else {
+        window.location.href = '/admin/';
+      }
+    });
+
+    // Cadastro
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      _clearMessages();
+      const btn   = e.target.querySelector('button[type=submit]');
+      const email = document.getElementById('registerEmail').value.trim();
+      const pwd   = document.getElementById('registerPassword').value;
+      const conf  = document.getElementById('registerPasswordConf').value;
+
+      if (pwd !== conf) {
+        _showError('As senhas não coincidem.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Criando...';
+
+      const { error } = await supabase.auth.signUp({ email, password: pwd });
+
+      if (error) {
+        _showError(error.message === 'User already registered' ? 'Este e-mail já está cadastrado.' : error.message);
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Criar conta';
+      } else {
+        _showSuccess('Conta criada! Verifique seu e-mail para confirmar o cadastro.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> Criar conta';
+      }
+    });
+
+    // Reset de senha
+    document.getElementById('forgotLink').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      if (!email) {
+        _showError('Digite seu e-mail para redefinir a senha.');
+        return;
+      }
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/admin/`
+      });
+      if (error) {
+        _showError('Erro ao enviar e-mail de recuperação.');
+      } else {
+        _showSuccess('E-mail de recuperação enviado! Verifique sua caixa de entrada.');
+      }
+    });
+
+    // Verifica se já está logado
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) window.location.href = '/admin/';
+    })();
+  </script>
+</body>
+</html>

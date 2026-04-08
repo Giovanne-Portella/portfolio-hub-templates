@@ -1,0 +1,327 @@
+/* === SECTION BUILDER — Mapa Visual de Seções === */
+
+.section-builder {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* === PAINEL ESQUERDO — Seções disponíveis === */
+.section-palette {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+  position: sticky;
+  top: calc(var(--admin-header-h) + 1rem);
+}
+
+.section-palette-header {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--admin-border-subtle);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--admin-text-muted);
+}
+
+.section-palette-list {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.palette-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 6px;
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border-subtle);
+  cursor: grab;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.palette-item:hover {
+  border-color: var(--admin-primary);
+  background: color-mix(in srgb, var(--admin-primary) 8%, var(--admin-bg));
+}
+
+.palette-item:active { cursor: grabbing; }
+
+.palette-item.dragging { opacity: 0.4; }
+
+.palette-item.in-use {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.palette-item-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--admin-primary) 12%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.palette-item-info { flex: 1 }
+.palette-item-name { font-size: 0.8rem; font-weight: 600; color: var(--admin-text); }
+.palette-item-desc { font-size: 0.68rem; color: var(--admin-text-muted); }
+
+.palette-item-add {
+  color: var(--admin-text-muted);
+  font-size: 0.85rem;
+  transition: color 0.15s;
+}
+
+.palette-item:hover .palette-item-add { color: var(--admin-primary); }
+
+/* === PAINEL DIREITO — Layout do portfolio === */
+.section-canvas {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.section-canvas-header {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--admin-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-canvas-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.section-canvas-hint {
+  font-size: 0.72rem;
+  color: var(--admin-text-muted);
+}
+
+/* Drop zone ativa */
+.section-canvas-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 300px;
+}
+
+.section-canvas-body.drag-over {
+  background: color-mix(in srgb, var(--admin-primary) 5%, transparent);
+}
+
+/* Drop indicator */
+.section-drop-indicator {
+  height: 3px;
+  background: var(--admin-primary);
+  border-radius: 2px;
+  display: none;
+  margin: 0.2rem 0;
+}
+
+.section-drop-indicator.visible { display: block; }
+
+/* === ITEM NA CANVAS === */
+.section-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 8px;
+  cursor: default;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  user-select: none;
+}
+
+.section-item:hover { border-color: var(--admin-border); }
+
+.section-item.dragging-over { border-color: var(--admin-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--admin-primary) 20%, transparent); }
+
+/* Handle de drag */
+.section-drag-handle {
+  color: var(--admin-text-muted);
+  font-size: 0.85rem;
+  cursor: grab;
+  padding: 0.2rem;
+}
+.section-drag-handle:active { cursor: grabbing; }
+
+/* Ícone */
+.section-item-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--admin-primary) 10%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: var(--admin-primary);
+  flex-shrink: 0;
+}
+
+/* Info */
+.section-item-info { flex: 1; min-width: 0; }
+
+.section-item-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.section-item-type {
+  font-size: 0.68rem;
+  color: var(--admin-text-muted);
+}
+
+/* Ações */
+.section-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.section-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--admin-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.section-action-btn:hover { background: var(--admin-surface-2); border-color: var(--admin-border); color: var(--admin-text); }
+.section-action-btn.active { color: #3fb950; }
+.section-action-btn.danger:hover { color: #f85149; border-color: color-mix(in srgb, #f85149 30%, transparent); }
+
+/* Hidden state */
+.section-item.hidden-section {
+  opacity: 0.5;
+}
+
+.section-item.hidden-section .section-item-name {
+  text-decoration: line-through;
+  color: var(--admin-text-muted);
+}
+
+/* Empty state */
+.section-canvas-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: var(--admin-text-muted);
+  text-align: center;
+  gap: 0.75rem;
+  min-height: 200px;
+}
+
+.section-canvas-empty i { font-size: 2.5rem; opacity: 0.4; }
+.section-canvas-empty p { font-size: 0.825rem; }
+
+/* === SECTION CONFIG MODAL === */
+.section-config-modal .modal { max-width: 640px; }
+
+.section-config-preview {
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Template pills */
+.template-tags {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.template-tag {
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  background: var(--admin-surface-2);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.template-tag.selected {
+  background: color-mix(in srgb, var(--admin-primary) 15%, transparent);
+  border-color: color-mix(in srgb, var(--admin-primary) 35%, transparent);
+  color: var(--admin-primary);
+}
+
+/* === LAYOUT GERAL DA PÁGINA SECTIONS === */
+
+/* Layout de duas colunas usado no admin/index.html */
+.section-builder-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Wrappers dos painéis que usam .admin-card */
+.section-palette-wrap {
+  position: sticky;
+  top: calc(var(--admin-header-h) + 1rem);
+}
+
+.section-canvas-wrap { min-height: 300px; }
+
+/* Drop zone do canvas */
+.section-canvas-drop {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 240px;
+}
+
+.section-canvas-drop.drag-over {
+  background: color-mix(in srgb, var(--admin-primary) 5%, transparent);
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .section-builder { grid-template-columns: 1fr; }
+  .section-builder-layout { grid-template-columns: 1fr; }
+  .section-palette { position: static; }
+  .section-palette-wrap { position: static; }
+}

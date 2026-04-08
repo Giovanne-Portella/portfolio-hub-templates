@@ -1,0 +1,103 @@
+/* === ANIMAÇÕES === */
+
+/* Fade in básico */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Slide up */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scale in */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Pulse */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.05); }
+}
+
+/* Gradient shift */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Classes de animação */
+.anim-fade-in   { animation: fadeIn  0.5s ease both; }
+.anim-slide-up  { animation: slideUp 0.5s ease both; }
+.anim-scale-in  { animation: scaleIn 0.3s ease both; }
+
+/* Delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* Elementos com scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gradiente animado no fundo (hero opcional) */
+.animated-gradient-bg {
+  background: linear-gradient(-45deg, var(--color-1), var(--color-2), var(--color-3, var(--color-1)), var(--color-4, var(--color-2)));
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Typing cursor */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--primary);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Tag shimmer (badges com gradiente) */
+.badge-shimmer {
+  background: linear-gradient(90deg, var(--color-1), var(--color-2), var(--color-1));
+  background-size: 200%;
+  animation: gradientShift 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hover glow para cards */
+.hover-glow {
+  transition: box-shadow var(--transition);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow);
+}

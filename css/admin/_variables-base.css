@@ -1,0 +1,54 @@
+/* === ADMIN — VARIÁVEIS E BASE === */
+
+:root {
+  --admin-sidebar-w: 240px;
+  --admin-header-h: 60px;
+  --admin-bg: #0d1117;
+  --admin-surface: #161b22;
+  --admin-surface-2: #1c2128;
+  --admin-border: #30363d;
+  --admin-border-subtle: #21262d;
+  --admin-text: #e6edf3;
+  --admin-text-2: #8b949e;
+  --admin-text-muted: #6e7681;
+
+  /* Cores do tema ativo (herdadas do portfolio) */
+  --admin-primary: #7c3aed;
+  --admin-accent:  #db2777;
+  --admin-gradient: linear-gradient(135deg, var(--admin-primary), var(--admin-accent));
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--admin-primary);
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+img { max-width: 100%; display: block; }
+ul  { list-style: none; }
+
+::-webkit-scrollbar      { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--admin-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--admin-border);
+  border-radius: 4px;
+}

@@ -1,0 +1,18 @@
+/* Portfolio Templates — Public CSS Manifest */
+/* A ordem dos imports é intencional — não alterar */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Roboto:wght@400;500;700&display=swap');
+
+@import 'modules/_variables.css';
+@import 'modules/_base.css';
+@import 'modules/_buttons.css';
+@import 'modules/_navbar.css';
+@import 'modules/_hero.css';
+@import 'modules/_sections.css';
+@import 'modules/_gallery.css';
+@import 'modules/_ui.css';
+@import 'modules/_animations.css';
+@import 'modules/_footer.css';
+@import 'modules/_responsive.css';
+@import 'modules/_music.css';
+@import 'modules/_splash.css';

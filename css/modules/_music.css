@@ -1,0 +1,373 @@
+/* === RADIO PLAYER — layout clean, minimalista === */
+
+.radio-player {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: calc(var(--z-reactor) + 1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+/* Botão flutuante */
+.radio-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient);
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4), var(--shadow-glow);
+  transition: transform .2s, box-shadow .2s;
+  flex-shrink: 0;
+}
+.radio-toggle-btn:hover { transform: scale(1.08); }
+
+/* Panel */
+.radio-panel {
+  background: rgba(13,17,23,.92);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 300px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 40px rgba(0,0,0,.5);
+  overflow: hidden;
+  transition: opacity .25s, transform .25s;
+  transform-origin: bottom right;
+}
+
+.radio-panel.collapsed {
+  opacity: 0;
+  transform: scale(.92) translateY(8px);
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Header do panel */
+.radio-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .625rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.radio-panel-header .radio-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.radio-panel-header button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: .2rem .4rem;
+  border-radius: 6px;
+  font-size: .85rem;
+  transition: color .15s, background .15s;
+}
+.radio-panel-header button:hover { color: var(--text); background: rgba(255,255,255,.06); }
+
+/* Info da faixa */
+.radio-info {
+  padding: .5rem 1rem .75rem;
+}
+
+.radio-title {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.radio-artist {
+  font-size: .75rem;
+  color: var(--text-muted);
+  margin-top: .15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Progress */
+.radio-progress-wrap {
+  padding: 0 1rem;
+}
+
+.radio-progress {
+  width: 100%;
+  height: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,.12);
+  border-radius: 99px;
+  cursor: pointer;
+  outline: none;
+  display: block;
+}
+
+.radio-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition: transform .15s;
+}
+.radio-progress::-webkit-slider-thumb:hover { transform: scale(1.4); }
+
+.radio-time {
+  display: flex;
+  justify-content: space-between;
+  font-size: .62rem;
+  color: var(--text-muted);
+  margin-top: .3rem;
+}
+
+/* Controles */
+.radio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .75rem 1rem .5rem;
+}
+
+.radio-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .15s, background .15s;
+  font-size: .9rem;
+  width: 36px;
+  height: 36px;
+}
+.radio-btn:hover { color: var(--text); background: rgba(255,255,255,.07); }
+.radio-btn.active { color: var(--primary); }
+
+.radio-btn-play {
+  width: 44px;
+  height: 44px;
+  background: var(--gradient);
+  color: #fff !important;
+  border-radius: 50%;
+  font-size: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.3), var(--shadow-glow);
+}
+.radio-btn-play:hover { opacity: .9; background: var(--gradient) !important; }
+
+/* Volume */
+.radio-volume-wrap {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .25rem 1rem .875rem;
+}
+.radio-volume-wrap i { font-size: .7rem; color: var(--text-muted); }
+
+.radio-volume {
+  flex: 1;
+  height: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,.12);
+  border-radius: 99px;
+  cursor: pointer;
+  outline: none;
+}
+.radio-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+}
+
+/* === MUSIC REACTOR — ambient glow === */
+.music-reactor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-reactor);
+  overflow: hidden;
+}
+
+.reactor-layer {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0;
+  transition: opacity .1s ease, transform .1s ease;
+  will-change: opacity, transform;
+}
+
+.reactor-bass {
+  width: 500px; height: 500px;
+  bottom: -100px; right: -100px;
+  background: radial-gradient(circle, var(--color-1), transparent 70%);
+}
+.reactor-mid {
+  width: 400px; height: 400px;
+  top: -100px; left: -100px;
+  background: radial-gradient(circle, var(--color-2, var(--color-1)), transparent 70%);
+}
+.reactor-treble {
+  width: 300px; height: 300px;
+  top: -80px; left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, var(--color-3, var(--color-1)), transparent 70%);
+}
+
+/* === TRACKLIST (seção music) === */
+.music-tracklist {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.music-track-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .75rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background .15s;
+  border: 1px solid transparent;
+}
+.music-track-item:hover {
+  background: var(--bg-alt);
+  border-color: var(--border-subtle);
+}
+.music-track-item:hover .music-track-play { opacity: 1; }
+.music-track-item:hover .music-track-num  { opacity: 0; }
+
+.music-track-num {
+  font-size: .8rem;
+  color: var(--text-muted);
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+  transition: opacity .15s;
+}
+
+.music-track-icon {
+  font-size: .85rem;
+  color: var(--text-muted);
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.music-track-info { flex: 1; min-width: 0; }
+.music-track-title {
+  font-size: .875rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.music-track-artist {
+  font-size: .75rem;
+  color: var(--text-muted);
+  margin-top: .1rem;
+}
+.music-track-dur {
+  font-size: .72rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.music-track-play {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: .85rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s;
+  padding: .25rem;
+  flex-shrink: 0;
+}
+
+/* === DISCOGRAPHY GRID === */
+.disc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.disc-card {
+  cursor: pointer;
+  transition: transform .2s;
+}
+.disc-card:hover { transform: translateY(-4px); }
+.disc-card:hover .disc-card-play { opacity: 1; transform: scale(1); }
+
+.disc-card-cover {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-alt);
+  margin-bottom: .75rem;
+}
+.disc-card-cover img { width: 100%; height: 100%; object-fit: cover; }
+.disc-card-cover-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; color: var(--text-muted);
+}
+.disc-card-play {
+  position: absolute;
+  inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.45);
+  border: none; cursor: pointer;
+  color: #fff; font-size: 1.5rem;
+  opacity: 0;
+  transform: scale(.8);
+  transition: opacity .2s, transform .2s;
+}
+
+.disc-card-title {
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.disc-card-artist {
+  font-size: .75rem;
+  color: var(--text-muted);
+  margin-top: .1rem;
+}

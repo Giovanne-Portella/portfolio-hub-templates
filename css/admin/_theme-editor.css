@@ -1,0 +1,488 @@
+/* === THEME EDITOR — seletor de cores estilo Discord Nitro === */
+
+.theme-editor {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Painel de template */
+.template-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.template-card {
+  padding: 1.25rem;
+  background: var(--admin-bg);
+  border: 2px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.template-card:hover { border-color: var(--admin-primary); }
+
+.template-card.selected {
+  border-color: var(--admin-primary);
+  background: color-mix(in srgb, var(--admin-primary) 8%, var(--admin-bg));
+}
+
+.template-card-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+.template-card-name { font-size: 0.8rem; font-weight: 600; color: var(--admin-text); }
+.template-card-desc { font-size: 0.68rem; color: var(--admin-text-muted); margin-top: 0.2rem; }
+
+/* === COLOR MIXER (Discord Nitro style) === */
+
+.color-mixer-wrap {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.color-mixer-header {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--admin-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.color-mixer-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.color-mixer-body { padding: 1.25rem; }
+
+/* Slots de cor */
+.color-slots {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.color-slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.color-slot-swatch {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius, 12px);
+  border: 3px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, border-color 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.color-slot-swatch:hover { transform: scale(1.08); }
+.color-slot-swatch.active { border-color: #fff; }
+
+.color-slot-swatch input[type="color"] {
+  position: absolute;
+  inset: 0;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.color-slot-label {
+  font-size: 0.6rem;
+  color: var(--admin-text-muted);
+  font-family: monospace;
+}
+
+.color-slot-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f85149;
+  color: #fff;
+  font-size: 0.65rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.color-slot:hover .color-slot-remove { display: flex; }
+
+/* Botão de adicionar cor */
+.color-add-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius, 12px);
+  background: var(--admin-bg);
+  border: 2px dashed var(--admin-border);
+  color: var(--admin-text-muted);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.color-add-btn:hover {
+  border-color: var(--admin-primary);
+  color: var(--admin-primary);
+  background: color-mix(in srgb, var(--admin-primary) 8%, var(--admin-bg));
+}
+
+.color-add-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* === PREVIEW GRADIENT === */
+
+.gradient-preview {
+  height: 80px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+  border: 1px solid var(--admin-border-subtle);
+}
+
+.gradient-preview-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* Opções de modo */
+.gradient-options {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.gradient-mode-btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gradient-mode-btn.active {
+  background: color-mix(in srgb, var(--admin-primary) 15%, transparent);
+  border-color: color-mix(in srgb, var(--admin-primary) 35%, transparent);
+  color: var(--admin-primary);
+}
+
+/* Direção do gradiente */
+.direction-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.direction-btn {
+  aspect-ratio: 1;
+  border-radius: 5px;
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--admin-text-muted);
+  transition: all 0.15s;
+}
+
+.direction-btn.active {
+  background: color-mix(in srgb, var(--admin-primary) 15%, transparent);
+  border-color: var(--admin-primary);
+  color: var(--admin-primary);
+}
+
+/* === TYPOGRAPHY & STYLE OPTIONS === */
+
+.style-section {
+  margin-bottom: 1.25rem;
+}
+
+.style-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--admin-text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.font-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.font-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border-subtle);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.font-option.selected {
+  border-color: var(--admin-primary);
+  background: color-mix(in srgb, var(--admin-primary) 8%, var(--admin-bg));
+}
+
+.font-option-preview {
+  font-size: 1rem;
+  color: var(--admin-text);
+  min-width: 24px;
+}
+
+.font-option-label { font-size: 0.8rem; color: var(--admin-text-2); }
+
+.radius-options,
+.anim-options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.style-toggle-btn {
+  flex: 1;
+  padding: 0.45rem 0.5rem;
+  border-radius: 6px;
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border-subtle);
+  color: var(--admin-text-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.style-toggle-btn.active {
+  border-color: var(--admin-primary);
+  color: var(--admin-primary);
+  background: color-mix(in srgb, var(--admin-primary) 10%, var(--admin-bg));
+}
+
+/* === LIVE PREVIEW === */
+
+.theme-live-preview {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+  position: sticky;
+  top: calc(var(--admin-header-h) + 1rem);
+}
+
+.theme-preview-header {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--admin-border-subtle);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.theme-preview-frame {
+  padding: 1.25rem;
+}
+
+/* Mini preview do hero */
+.mini-hero {
+  border-radius: 8px;
+  overflow: hidden;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.mini-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+}
+
+.mini-hero-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.mini-hero-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+.mini-hero-tag {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.7);
+  position: relative;
+  z-index: 1;
+}
+
+.mini-btn {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-size: 0.65rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Mini card preview */
+.mini-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.mini-card {
+  height: 50px;
+  border-radius: 6px;
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border-subtle);
+}
+
+/* === LAYOUT GERAL DA PÁGINA THEME === */
+
+/* Grid de 2 colunas usado no admin/index.html */
+.theme-editor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Títulos e descrições das seções do editor */
+.theme-section-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  margin-bottom: 0.25rem;
+}
+
+.theme-section-desc {
+  font-size: 0.78rem;
+  color: var(--admin-text-2);
+  margin-bottom: 1rem;
+}
+
+/* Rótulo simples acima de um grupo de controles */
+.theme-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--admin-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+/* Grid de cards de template dentro do theme editor */
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Linhas de controles de gradiente/modo */
+.gradient-mode-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.gradient-directions-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+}
+
+/* Linha de toggle de estilo (sharp/rounded/pill, none/subtle/full) */
+.style-toggle-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Indicador "ativo" no card de template */
+.template-card-active {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--admin-primary);
+  background: color-mix(in srgb, var(--admin-primary) 15%, transparent);
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+}
+
+/* Cards de template no setup page */
+.template-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 1100px) {
+  .theme-editor { grid-template-columns: 1fr; }
+  .theme-editor-grid { grid-template-columns: 1fr; }
+  .theme-live-preview { position: static; }
+}

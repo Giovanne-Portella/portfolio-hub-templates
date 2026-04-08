@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Portfolio Templates</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Admin CSS -->
+  <link rel="stylesheet" href="../css/admin.css?v=6">
+
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+</head>
+<body>
+
+  <!-- ====================================================
+       LOADING OVERLAY
+       ==================================================== -->
+  <div class="loading-overlay" id="loadingOverlay" style="display:none">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loadingText">Carregando...</div>
+  </div>
+
+  <!-- ====================================================
+       SIDEBAR
+       ==================================================== -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar-header">
+      <div class="admin-logo">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Portfolio Templates</span>
+      </div>
+    </div>
+
+    <nav class="admin-nav">
+      <div class="admin-nav-section">
+        <div class="admin-nav-label">Geral</div>
+        <a href="#dashboard" class="admin-nav-item" data-page="dashboard">
+          <i class="fa-solid fa-gauge-high"></i> Dashboard
+        </a>
+        <a href="#setup" class="admin-nav-item" data-page="setup">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Template
+        </a>
+      </div>
+
+      <div class="admin-nav-section">
+        <div class="admin-nav-label">Design</div>
+        <a href="#sections" class="admin-nav-item" data-page="sections">
+          <i class="fa-solid fa-table-layout"></i> Mapa de Seções
+        </a>
+        <a href="#theme" class="admin-nav-item" data-page="theme">
+          <i class="fa-solid fa-palette"></i> Tema e Cores
+        </a>
+      </div>
+
+      <div class="admin-nav-section">
+        <div class="admin-nav-label">Conteúdo</div>
+        <a href="#profile" class="admin-nav-item" data-page="profile">
+          <i class="fa-solid fa-user"></i> Perfil / Bio
+        </a>
+        <a href="#media" class="admin-nav-item" data-page="media">
+          <i class="fa-solid fa-photo-film"></i> Biblioteca de Mídia
+        </a>
+        <a href="#gallery" class="admin-nav-item" data-page="gallery">
+          <i class="fa-solid fa-images"></i> Galerias
+        </a>
+        <a href="#radio" class="admin-nav-item" data-page="radio">
+          <i class="fa-solid fa-radio"></i> Rádio / Músicas
+        </a>
+        <a href="#events" class="admin-nav-item" data-page="events">
+          <i class="fa-solid fa-calendar-days"></i> Eventos
+        </a>
+        <a href="#publications" class="admin-nav-item" data-page="publications">
+          <i class="fa-solid fa-file-lines"></i> Publicações
+        </a>
+        <a href="#services" class="admin-nav-item" data-page="services">
+          <i class="fa-solid fa-briefcase"></i> Serviços
+        </a>
+      </div>
+
+      <div class="admin-nav-section">
+        <div class="admin-nav-label">Conta</div>
+        <a href="#splash" class="admin-nav-item" data-page="splash">
+          <i class="fa-solid fa-wand-sparkles"></i> Modal de boas-vindas
+        </a>
+        <a href="#settings" class="admin-nav-item" data-page="settings">
+          <i class="fa-solid fa-gear"></i> Configurações
+        </a>
+        <a href="#" class="admin-nav-item" id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </a>
+      </div>
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <div class="admin-user-info">
+        <i class="fa-solid fa-circle-user"></i>
+        <div>
+          <div class="admin-user-name">Admin</div>
+          <div class="admin-user-email"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Overlay mobile -->
+  <div class="admin-sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- ====================================================
+       CONTEÚDO PRINCIPAL
+       ==================================================== -->
+  <div class="admin-main">
+    <!-- Header -->
+    <header class="admin-header">
+      <button class="btn btn-ghost btn-icon" id="sidebarToggle" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="admin-header-breadcrumb" id="adminBreadcrumb">Dashboard</div>
+      <div class="admin-header-actions">
+        <a href="/" target="_blank" class="btn btn-secondary btn-sm">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver site
+        </a>
+      </div>
+    </header>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="admin-page active" id="page-dashboard">
+      <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-photo-film"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="statMedia">—</div>
+            <div class="stat-label">Arquivos de mídia</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-table-layout"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="statSections">—</div>
+            <div class="stat-label">Seções ativas</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-images"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="statGalleries">—</div>
+            <div class="stat-label">Galerias</div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-header">
+          <div>
+            <h3>Meu Portfolio</h3>
+            <div style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">
+              <span id="dashTemplateLabel" class="badge badge-primary">—</span>
+              <span id="dashPublishStatus" class="badge badge-secondary">Rascunho</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:1rem">
+          <div class="form-label" style="margin-bottom:.25rem">URL pública</div>
+          <a id="dashPublicUrl" href="#" target="_blank" style="color:var(--primary);word-break:break-all">#</a>
+        </div>
+      </div>
+      <div class="dashboard-actions" style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#sections" data-page="sections" class="btn btn-primary">
+          <i class="fa-solid fa-table-layout"></i> Editar seções
+        </a>
+        <a href="#theme" data-page="theme" class="btn btn-secondary">
+          <i class="fa-solid fa-palette"></i> Editar tema
+        </a>
+        <a href="#media" data-page="media" class="btn btn-secondary">
+          <i class="fa-solid fa-upload"></i> Enviar mídia
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== SETUP / TEMPLATE ===== -->
+    <div class="admin-page" id="page-setup">
+      <div class="page-header">
+        <h1 class="page-title">Selecionar Template</h1>
+        <p class="page-subtitle">Escolha o tipo de portfolio. Isso define quais seções e funcionalidades ficam disponíveis.</p>
+      </div>
+      <div id="templateCardsContainer"></div>
+    </div>
+
+    <!-- ===== SECTION BUILDER ===== -->
+    <div class="admin-page" id="page-sections">
+      <div class="page-header">
+        <h1 class="page-title">Mapa de Seções</h1>
+        <p class="page-subtitle">Clique em + para adicionar seções. Arraste para reordenar. Use o olho para ocultar.</p>
+      </div>
+
+      <!-- Layout de duas colunas: paleta + canvas -->
+      <div class="section-builder-layout">
+
+        <!-- Paleta de tipos disponíveis -->
+        <div class="admin-card section-palette-wrap">
+          <div class="admin-card-title" style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--admin-text-2);margin-bottom:1rem">
+            Tipos disponíveis
+          </div>
+          <div id="sectionPalette"></div>
+        </div>
+
+        <!-- Canvas — seções ativas (ordenáveis) -->
+        <div class="admin-card section-canvas-wrap">
+          <div class="admin-card-title" style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--admin-text-2);margin-bottom:1rem">
+            Seções ativas
+          </div>
+          <div id="sectionCanvas" class="section-canvas-drop"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== THEME EDITOR ===== -->
+    <div class="admin-page" id="page-theme">
+      <div class="page-header">
+        <h1 class="page-title">Tema e Cores</h1>
+        <p class="page-subtitle">Personalize as cores, fontes e estilos do seu portfolio.</p>
+        <button class="btn btn-primary" id="saveThemeBtn">
+          <i class="fa-solid fa-floppy-disk"></i> Salvar tema
+        </button>
+      </div>
+
+      <!-- Preview -->
+      <div class="admin-card theme-preview-card" style="margin-bottom:1.5rem">
+        <div class="theme-mini-hero" id="miniHeroBg" style="height:80px;border-radius:8px;margin-bottom:1rem;transition:background .3s"></div>
+        <div style="display:flex;gap:.75rem">
+          <div class="mini-card" style="flex:1;height:40px;background:var(--admin-surface-2);border-radius:6px;border-top:2px solid var(--admin-primary)"></div>
+          <div class="mini-card" style="flex:1;height:40px;background:var(--admin-surface-2);border-radius:6px;border-top:2px solid var(--admin-accent)"></div>
+          <div class="mini-card" style="flex:1;height:40px;background:var(--admin-surface-2);border-radius:6px;border-top:2px solid var(--admin-primary)"></div>
+        </div>
+      </div>
+
+      <div class="theme-editor-grid">
+
+        <!-- Template preset -->
+        <div class="admin-card">
+          <h3 class="theme-section-title">Template base</h3>
+          <p class="theme-section-desc">Escolha um preset para aplicar cores, fontes e seções sugeridas.</p>
+          <div class="template-grid" id="templateGrid"></div>
+        </div>
+
+        <!-- Cores -->
+        <div class="admin-card">
+          <h3 class="theme-section-title">Paleta de cores</h3>
+          <p class="theme-section-desc">Clique na cor para editar. Use + para adicionar (máx. 5 cores).</p>
+          <div class="color-slots" id="colorSlots"></div>
+
+          <div style="margin-top:1.25rem">
+            <div class="theme-label">Modo</div>
+            <div class="gradient-mode-row" id="gradientModes"></div>
+          </div>
+
+          <div style="margin-top:1rem">
+            <div class="theme-label">Direção do gradiente</div>
+            <div class="gradient-preview-bar" id="gradientPreviewBar" style="height:12px;border-radius:6px;margin-bottom:.75rem;transition:background .3s"></div>
+            <div class="gradient-directions-row" id="gradientDirections"></div>
+          </div>
+        </div>
+
+        <!-- Estilo -->
+        <div class="admin-card">
+          <h3 class="theme-section-title">Estilo visual</h3>
+
+          <div class="theme-label" style="margin-top:.75rem">Fonte</div>
+          <div class="font-options" id="fontOptions"></div>
+
+          <div class="theme-label" style="margin-top:1rem">Cantos dos elementos</div>
+          <div class="style-toggle-row" id="radiusOptions"></div>
+
+          <div class="theme-label" style="margin-top:1rem">Animações</div>
+          <div class="style-toggle-row" id="animOptions"></div>
+        </div>
+
+        <!-- Music Reactor -->
+        <div class="admin-card">
+          <h3 class="theme-section-title">Music Reactor</h3>
+          <p class="theme-section-desc">Efeitos visuais que reagem ao áudio da rádio em tempo real.</p>
+
+          <div class="form-toggle" style="margin-bottom:1rem">
+            <input type="checkbox" id="reactorToggleInput" style="display:none">
+            <div class="toggle-track" id="reactorToggleTrack"><div class="toggle-thumb"></div></div>
+            <label class="toggle-label" for="reactorToggleInput">Ativar Music Reactor</label>
+          </div>
+
+          <div class="theme-label">Intensidade</div>
+          <div class="style-toggle-row" id="reactorIntensity"></div>
+        </div>
+
+      </div><!-- end .theme-editor-grid -->
+    </div>
+
+    <!-- ===== PERFIL ===== -->
+    <div class="admin-page" id="page-profile">
+      <div class="page-header">
+        <h1 class="page-title">Perfil / Bio</h1>
+      </div>
+      <div class="admin-card" style="max-width:700px">
+        <!-- Avatar -->
+        <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem">
+          <div class="avatar-upload-wrap">
+            <img id="avatarPreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' rx='40' fill='%2330363d'/%3E%3Ccircle cx='40' cy='32' r='14' fill='%238b949e'/%3E%3Cellipse cx='40' cy='68' rx='22' ry='14' fill='%238b949e'/%3E%3C/svg%3E" alt="Avatar" class="avatar-preview">
+            <button type="button" class="btn btn-ghost btn-icon avatar-change-btn" id="changeAvatarBtn" title="Alterar foto">
+              <i class="fa-solid fa-camera"></i>
+            </button>
+          </div>
+          <div>
+            <div style="font-weight:600;margin-bottom:.25rem">Foto de perfil</div>
+            <div style="color:var(--text-secondary);font-size:.85rem">JPG ou PNG, recomendado 400×400px</div>
+          </div>
+          <input type="file" id="avatarInput" accept="image/*" style="display:none">
+        </div>
+
+        <form id="profileForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nome completo</label>
+              <input type="text" class="form-input" id="profileName" placeholder="Seu nome">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Título / Slogan</label>
+              <input type="text" class="form-input" id="profileTagline" placeholder="Ex.: Guitarrista & Compositor">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Biografia</label>
+            <textarea class="form-input form-textarea" id="profileBio" rows="5" placeholder="Escreva sobre você..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">E-mail</label>
+              <input type="email" class="form-input" id="profileEmail" placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Telefone / WhatsApp</label>
+              <input type="tel" class="form-input" id="profilePhone" placeholder="+55 (11) 99999-9999">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Localização</label>
+              <input type="text" class="form-input" id="profileLocation" placeholder="São Paulo, Brasil">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Website</label>
+              <input type="url" class="form-input" id="profileWebsite" placeholder="https://...">
+            </div>
+          </div>
+
+          <!-- Links sociais -->
+          <div class="form-section-title" style="margin:1.5rem 0 .75rem">Links Sociais</div>
+          <div id="socialLinksContainer"></div>
+          <button type="button" class="btn btn-ghost btn-sm" id="addSocialBtn" style="margin-top:.5rem">
+            <i class="fa-solid fa-plus"></i> Adicionar link
+          </button>
+
+          <div style="margin-top:2rem;display:flex;gap:1rem">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-floppy-disk"></i> Salvar perfil
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== MÍDIA ===== -->
+    <div class="admin-page" id="page-media">
+      <div class="page-header">
+        <h1 class="page-title">Biblioteca de Mídia</h1>
+        <button class="btn btn-primary" id="mediaUploadBtn">
+          <i class="fa-solid fa-upload"></i> Enviar arquivos
+        </button>
+        <input type="file" id="mediaFileInput" multiple accept="image/*,audio/*,video/*,.pdf,.doc,.docx" style="display:none">
+      </div>
+
+      <!-- Filtros e busca -->
+      <div class="media-toolbar">
+        <div class="media-filter-tabs">
+          <button class="btn btn-ghost btn-sm active" data-media-filter="all">Todos</button>
+          <button class="btn btn-ghost btn-sm" data-media-filter="image">Imagens</button>
+          <button class="btn btn-ghost btn-sm" data-media-filter="audio">Áudio</button>
+          <button class="btn btn-ghost btn-sm" data-media-filter="video">Vídeo</button>
+          <button class="btn btn-ghost btn-sm" data-media-filter="document">Docs</button>
+        </div>
+        <input type="search" class="form-input form-input-sm" id="mediaSearch" placeholder="Buscar arquivo...">
+      </div>
+
+      <!-- Drop Zone -->
+      <div class="drop-zone" id="mediaDropZone">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <p>Arraste e solte arquivos aqui ou <strong>clique para selecionar</strong></p>
+        <small style="color:var(--text-secondary)">Imagens, MP3, MP4, PDF, DOC</small>
+      </div>
+
+      <!-- Progresso de upload -->
+      <div id="uploadProgress" style="display:none;margin-bottom:1rem"></div>
+
+      <!-- Grid de mídia -->
+      <div class="media-grid" id="mediaGrid"></div>
+    </div>
+
+    <!-- ===== RÁDIO ===== -->
+    <div class="admin-page" id="page-radio">
+      <div class="page-header">
+        <h1 class="page-title">Rádio / Músicas</h1>
+        <button class="btn btn-primary" id="newPlaylistBtn">
+          <i class="fa-solid fa-plus"></i> Nova playlist
+        </button>
+      </div>
+      <div id="playlistsContainer"></div>
+    </div>
+
+    <!-- ===== GALERIAS ===== -->
+    <div class="admin-page" id="page-gallery">
+      <div class="page-header">
+        <h1 class="page-title">Galerias</h1>
+        <button class="btn btn-primary" id="newGalleryBtn">
+          <i class="fa-solid fa-plus"></i> Nova galeria
+        </button>
+      </div>
+      <div id="galleriesContainer"></div>
+    </div>
+
+    <!-- ===== EVENTOS ===== -->
+    <div class="admin-page" id="page-events">
+      <div class="page-header">
+        <h1 class="page-title">Eventos</h1>
+        <button class="btn btn-primary" id="newEventBtn">
+          <i class="fa-solid fa-plus"></i> Novo evento
+        </button>
+      </div>
+      <div id="eventsContainer"></div>
+    </div>
+
+    <!-- ===== PUBLICAÇÕES ===== -->
+    <div class="admin-page" id="page-publications">
+      <div class="page-header">
+        <h1 class="page-title">Publicações</h1>
+        <button class="btn btn-primary" id="newPubBtn">
+          <i class="fa-solid fa-plus"></i> Nova publicação
+        </button>
+      </div>
+      <div id="publicationsContainer"></div>
+    </div>
+
+    <!-- ===== SERVIÇOS ===== -->
+    <div class="admin-page" id="page-services">
+      <div class="page-header">
+        <h1 class="page-title">Serviços</h1>
+        <button class="btn btn-primary" id="newServiceBtn">
+          <i class="fa-solid fa-plus"></i> Novo serviço
+        </button>
+      </div>
+      <div id="servicesContainer"></div>
+    </div>
+
+    <!-- ===== CONFIGURAÇÕES ===== -->
+    <!-- ===== SPLASH / MODAL DE BOAS-VINDAS ===== -->
+    <div class="admin-page" id="page-splash">
+      <div class="page-header">
+        <h1 class="page-title">Modal de Boas-vindas</h1>
+        <p class="page-subtitle">Configure a tela inicial que aparece quando alguém visita seu portfolio pela primeira vez.</p>
+        <button class="btn btn-primary" id="saveSplashBtn">
+          <i class="fa-solid fa-floppy-disk"></i> Salvar
+        </button>
+      </div>
+
+      <div class="theme-editor-grid">
+        <!-- Ativar splash -->
+        <div class="admin-card">
+          <h3 class="theme-section-title">Ativação</h3>
+          <p class="theme-section-desc">Quando ativo, visitantes verão um modal de terminal na primeira visita.</p>
+          <div class="form-toggle" style="margin-top:1rem">
+            <input type="checkbox" id="splashEnabled" style="display:none">
+            <div class="toggle-track" id="splashEnabledTrack">
+              <div class="toggle-thumb"></div>
+            </div>
+            <label class="toggle-label" for="splashEnabled">Habilitar modal de boas-vindas</label>
+          </div>
+        </div>
+
+        <!-- Personalização -->
+        <div class="admin-card">
+          <h3 class="theme-section-title">Personalização</h3>
+          <div class="form">
+            <div class="form-group">
+              <label class="form-label">Título do terminal</label>
+              <input type="text" class="form-input" id="splashTerminalTitle" placeholder="portfolio — bash" maxlength="40">
+              <small style="color:var(--admin-text-2)">Aparece na barra de título do terminal</small>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Linhas de boot (uma por linha)</label>
+              <textarea class="form-input form-textarea" id="splashBootLines" rows="6" placeholder="Iniciando sistema...&#10;Carregando módulos&#10;Sistema pronto"></textarea>
+              <small style="color:var(--admin-text-2)">Cada linha é exibida em sequência. Linhas marcadas com [OK] ficam verdes, [INFO] ficam azuis.</small>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Texto do botão de entrar</label>
+              <input type="text" class="form-input" id="splashBtnLabel" placeholder="[ Pressione Enter ]" maxlength="40">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="admin-card" style="margin-top:1.5rem">
+        <h3 class="theme-section-title">Preview</h3>
+        <div id="splashPreviewWrap" style="background:#010409;border-radius:8px;padding:1rem;margin-top:.75rem;max-width:560px">
+          <div style="background:#161b22;border-radius:6px 6px 0 0;padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid #30363d">
+            <span style="width:12px;height:12px;border-radius:50%;background:#ff5f57;display:inline-block"></span>
+            <span style="width:12px;height:12px;border-radius:50%;background:#febc2e;display:inline-block"></span>
+            <span style="width:12px;height:12px;border-radius:50%;background:#28c840;display:inline-block"></span>
+            <span id="splashPreviewTitle" style="flex:1;text-align:center;font-size:.7rem;color:#6e7681;font-family:monospace">portfolio — bash</span>
+          </div>
+          <div id="splashPreviewBody" style="padding:1rem;font-family:monospace;font-size:.78rem;min-height:100px;color:#8b949e"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-page" id="page-settings">
+      <div class="page-header">
+        <h1 class="page-title">Configurações</h1>
+      </div>
+      <div class="admin-card" style="max-width:600px">
+        <form id="settingsForm">
+          <div class="form-group">
+            <label class="form-label">Nome do portfolio</label>
+            <input type="text" class="form-input" id="settingsName" placeholder="Meu Portfolio">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Slug da URL pública</label>
+            <div style="display:flex;gap:.5rem">
+              <input type="text" class="form-input" id="settingsSlug" placeholder="meu-portfolio">
+              <button type="button" class="btn btn-secondary btn-sm" id="generateSlugBtn">Gerar</button>
+            </div>
+            <small style="color:var(--text-secondary)">Acesso: /?slug=<span id="slugPreview">...</span></small>
+          </div>
+          <div class="form-group">
+            <label class="toggle-wrap">
+              <input type="checkbox" class="toggle-input" id="settingsPublish">
+              <span class="toggle-track"></span>
+              <span class="toggle-label">Portfolio publicado (visível publicamente)</span>
+            </label>
+          </div>
+          <div style="margin-top:1.5rem">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-floppy-disk"></i> Salvar configurações
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div><!-- end .admin-main -->
+
+  <!-- ====================================================
+       MODAIS
+       ==================================================== -->
+
+  <!-- Modal genérico de seção config -->
+  <div class="modal-backdrop" id="sectionConfigModal" role="dialog" aria-modal="true">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="sectionConfigTitle">Configurar seção</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('sectionConfigModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="sectionConfigBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('sectionConfigModal')">Cancelar</button>
+        <button class="btn btn-primary" id="sectionConfigSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal playlist -->
+  <div class="modal-backdrop" id="playlistModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="playlistModalTitle">Nova Playlist</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('playlistModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="playlistModalBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('playlistModal')">Cancelar</button>
+        <button class="btn btn-primary" id="playlistModalSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal picker de faixa -->
+  <div class="modal-backdrop" id="trackPickerModal" role="dialog" aria-modal="true">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">Adicionar faixas</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('trackPickerModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="trackPickerBody" style="max-height:60vh;overflow-y:auto"></div>
+      <input type="hidden" id="trackPickerPlaylistId">
+    </div>
+  </div>
+
+  <!-- Modal galeria -->
+  <div class="modal-backdrop" id="galleryModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="galleryModalTitle">Nova Galeria</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('galleryModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="galleryModalBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('galleryModal')">Cancelar</button>
+        <button class="btn btn-primary" id="galleryModalSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal itens da galeria -->
+  <div class="modal-backdrop" id="itemsManagerModal" role="dialog" aria-modal="true">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="itemsManagerTitle">Itens da Galeria</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('itemsManagerModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="itemsManagerBody" style="max-height:60vh;overflow-y:auto"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="addFromLibraryBtn">
+          <i class="fa-solid fa-plus"></i> Adicionar da biblioteca
+        </button>
+        <button class="btn btn-secondary" onclick="closeModal('itemsManagerModal')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal evento -->
+  <div class="modal-backdrop" id="eventModal" role="dialog" aria-modal="true">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="eventModalTitle">Novo Evento</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('eventModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="eventModalBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('eventModal')">Cancelar</button>
+        <button class="btn btn-primary" id="eventModalSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal publicação -->
+  <div class="modal-backdrop" id="pubModal" role="dialog" aria-modal="true">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="pubModalTitle">Nova Publicação</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('pubModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="pubModalBody" style="max-height:70vh;overflow-y:auto"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('pubModal')">Cancelar</button>
+        <button class="btn btn-primary" id="pubModalSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal serviço -->
+  <div class="modal-backdrop" id="serviceModal" role="dialog" aria-modal="true">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="serviceModalTitle">Novo Serviço</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('serviceModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="serviceModalBody" style="max-height:70vh;overflow-y:auto"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('serviceModal')">Cancelar</button>
+        <button class="btn btn-primary" id="serviceModalSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal detalhe de mídia -->
+  <div class="modal-backdrop" id="mediaDetailModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Detalhes do arquivo</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('mediaDetailModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="mediaDetailBody"></div>
+    </div>
+  </div>
+
+  <!-- Modal media picker -->
+  <div class="modal-backdrop" id="mediaPickerModal" role="dialog" aria-modal="true">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">Selecionar arquivo</h3>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('mediaPickerModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="mediaPickerGrid" style="max-height:60vh;overflow-y:auto"></div>
+    </div>
+  </div>
+
+  <!-- Modal confirmação -->
+  <div class="modal-backdrop" id="confirmModal" role="dialog" aria-modal="true">
+    <div class="modal modal-sm confirm-modal">
+      <div class="modal-body">
+        <div class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <p id="confirmMessage" style="text-align:center;font-size:1rem"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="confirmCancelBtn">Cancelar</button>
+        <button class="btn btn-danger" id="confirmOkBtn">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================
+       TOAST CONTAINER
+       ==================================================== -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- ====================================================
+       SCRIPTS
+       ==================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Config -->
+  <script src="../js/config.js?v=6"></script>
+  <script src="../js/auth.js?v=6"></script>
+
+  <!-- Utilitários -->
+  <script src="../js/modules/utils.js?v=6"></script>
+
+  <!-- Admin core (toast, loading, modal, uploadFile) -->
+  <script src="../js/admin/core.js?v=6"></script>
+
+  <!-- Módulos admin -->
+  <script src="../js/admin/section-builder.js?v=6"></script>
+  <script src="../js/admin/theme-editor.js?v=6"></script>
+  <script src="../js/admin/media-library.js?v=6"></script>
+  <script src="../js/admin/radio-manager.js?v=6"></script>
+  <script src="../js/admin/profile.js?v=6"></script>
+  <script src="../js/admin/gallery-manager.js?v=6"></script>
+  <script src="../js/admin/events-manager.js?v=6"></script>
+  <script src="../js/admin/publications-manager.js?v=6"></script>
+  <script src="../js/admin/services-manager.js?v=6"></script>
+  <script src="../js/admin/splash-manager.js?v=1"></script>
+
+  <!-- Entry point admin -->
+  <script src="../js/admin.js?v=6"></script>
+</body>
+</html>

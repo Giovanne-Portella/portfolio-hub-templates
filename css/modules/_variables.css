@@ -1,0 +1,89 @@
+/* === DESIGN TOKENS — Portfolio Templates === */
+/* Estes valores são sobrescritos em runtime pelo theme-engine.js */
+
+:root {
+  /* === CORES DINÂMICAS (sobrescritas pelo tema) === */
+  --color-1: #7c3aed;
+  --color-2: #db2777;
+  --color-3: #0ea5e9;
+  --color-4: #10b981;
+  --color-5: #f59e0b;
+
+  /* Gradiente gerado dinamicamente */
+  --gradient: linear-gradient(135deg, var(--color-1), var(--color-2));
+  --gradient-text: linear-gradient(135deg, var(--color-1), var(--color-2));
+
+  /* Cor primária (alias para color-1) */
+  --primary: var(--color-1);
+  --primary-dark: color-mix(in srgb, var(--color-1) 80%, black);
+  --primary-light: color-mix(in srgb, var(--color-1) 60%, white);
+
+  /* Accent (alias para color-2) */
+  --accent: var(--color-2);
+
+  /* === FUNDO === */
+  --bg: #0d1117;
+  --bg-alt: #161b22;
+  --bg-card: #161b22;
+  --bg-overlay: rgba(13, 17, 23, 0.85);
+
+  /* === TEXTO === */
+  --text: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+
+  /* === BORDAS === */
+  --border: #30363d;
+  --border-subtle: #21262d;
+
+  /* === TIPOGRAFIA (sobrescrita pelo tema) === */
+  --font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-display: var(--font-family);
+
+  /* === BORDER RADIUS (sobrescrito pelo tema) === */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* === SOMBRAS === */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px color-mix(in srgb, var(--color-1) 40%, transparent);
+
+  /* === TRANSIÇÕES === */
+  --transition: 0.2s ease;
+  --transition-slow: 0.4s ease;
+
+  /* === Z-INDEX === */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 1000;
+  --z-toast: 2000;
+  --z-reactor: 9998;
+  --z-splash: 9999;
+}
+
+/* === RADIUS MODES === */
+[data-radius="sharp"] {
+  --radius: 4px;
+  --radius-sm: 2px;
+  --radius-lg: 8px;
+  --radius-full: 8px;
+}
+
+[data-radius="rounded"] {
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+}
+
+[data-radius="pill"] {
+  --radius: 24px;
+  --radius-sm: 16px;
+  --radius-lg: 40px;
+  --radius-full: 9999px;
+}

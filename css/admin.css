@@ -1,0 +1,12 @@
+/* Portfolio Templates — Admin CSS Manifest */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@import 'admin/_variables-base.css';
+@import 'admin/_sidebar.css';
+@import 'admin/_content.css';
+@import 'admin/_forms.css';
+@import 'admin/_section-builder.css';
+@import 'admin/_theme-editor.css';
+@import 'admin/_components.css';
+@import 'admin/_responsive.css';

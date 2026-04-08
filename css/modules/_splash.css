@@ -1,0 +1,210 @@
+/* === MUSIC REACTOR — ambient glow === */
+
+.music-reactor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-reactor);
+  overflow: hidden;
+}
+
+.reactor-layer {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0;
+  transition: opacity 0.1s ease, transform 0.1s ease;
+  will-change: opacity, transform;
+}
+
+/* Bass — color-1, canto inferior direito */
+.reactor-bass {
+  width: 500px;
+  height: 500px;
+  bottom: -100px;
+  right: -100px;
+  background: radial-gradient(circle, var(--color-1), transparent 70%);
+}
+
+/* Mid — color-2, canto superior esquerdo */
+.reactor-mid {
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  left: -100px;
+  background: radial-gradient(circle, var(--color-2), transparent 70%);
+}
+
+/* Treble — color-3, centro superior */
+.reactor-treble {
+  width: 300px;
+  height: 300px;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, var(--color-3), transparent 70%);
+}
+
+/* === SPLASH SCREEN === */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: var(--z-splash);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.splash.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.splash-terminal {
+  background: #010409;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 560px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Barra de título */
+.splash-terminal-bar {
+  background: #161b22;
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.splash-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.splash-dot-red    { background: #ff5f57; }
+.splash-dot-yellow { background: #febc2e; }
+.splash-dot-green  { background: #28c840; }
+
+.splash-terminal-title {
+  flex: 1;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'Courier New', monospace;
+  margin-left: -2.5rem;
+}
+
+/* Corpo do terminal */
+.splash-body {
+  padding: 1.25rem 1.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.8rem;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.splash-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.splash-line.visible { opacity: 1; }
+
+.splash-ok     { color: #3fb950; font-weight: 700; min-width: 40px; }
+.splash-info   { color: #58a6ff; font-weight: 700; min-width: 40px; }
+.splash-warn   { color: #d29922; }
+.splash-text   { color: var(--text-secondary); }
+.splash-prompt { color: var(--text-muted); }
+
+.splash-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--primary);
+  animation: blink 1s infinite;
+  vertical-align: text-bottom;
+}
+
+/* Progress bar do boot */
+.splash-progress-wrap {
+  margin: 0.75rem 0;
+  display: none;
+}
+
+.splash-progress-wrap.visible { display: block; }
+
+.splash-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.splash-progress-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.splash-progress-fill {
+  height: 100%;
+  background: var(--gradient);
+  border-radius: var(--radius-full);
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* Botão de entrar */
+.splash-btn-wrap {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  display: none;
+  justify-content: center;
+}
+
+.splash-btn-wrap.visible { display: flex; }
+
+.splash-enter-btn {
+  background: var(--gradient);
+  color: #fff;
+  border: none;
+  padding: 0.625rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-glow);
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+.splash-enter-btn:hover { transform: translateY(-1px); opacity: 0.9; }
+
+/* Return visitor (splash rápido) */
+.splash-return {
+  text-align: center;
+}
+
+.splash-welcome-back {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+
+.splash-typing-sound { display: none; }

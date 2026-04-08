@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css?v=9">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body class="site-loading">
+
+  <!-- ====================================================
+       SPLASH — CSS: .splash / .splash.hidden
+       JS: getElementById('splashScreen') → elemento com id=splashScreen
+       splash.js sobrescreve innerHTML, então estrutura interna não importa
+       ==================================================== -->
+  <div id="splashScreen" class="splash"></div>
+
+  <!-- ====================================================
+       NAVBAR
+       CSS: .navbar / .navbar-toggle / .navbar-mobile
+       JS navbar.js: getElementById('navbar','navToggle','navMobile','navLinks','navMobileLinks')
+       ==================================================== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner container">
+      <a href="#" class="navbar-brand" id="navBrand">Portfolio</a>
+
+      <div class="navbar-links" id="navLinks"></div>
+
+      <button class="navbar-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile drawer — CSS: .navbar-mobile / .navbar-mobile.open -->
+  <div class="navbar-mobile" id="navMobile">
+    <div id="navMobileLinks"></div>
+  </div>
+
+  <!-- ====================================================
+       SEÇÕES — section-renderer.js: getElementById('sections-root')
+       ==================================================== -->
+  <main id="sections-root"></main>
+
+  <!-- ====================================================
+       FOOTER
+       ==================================================== -->
+  <footer class="footer" id="siteFooter">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand"><span id="footerName">Portfolio</span></div>
+        <div class="footer-social" id="footerSocial"></div>
+        <div class="footer-copy">
+          <small>Feito com <i class="fa-solid fa-heart" style="color:var(--color-1)"></i></small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====================================================
+       RADIO PLAYER
+       CSS: .radio-player / .radio-panel / .radio-panel.collapsed
+            .radio-toggle-btn / .radio-cover / .radio-info / .radio-title /
+            .radio-artist / .radio-progress / .radio-time / .radio-controls /
+            .radio-btn / .radio-btn-play / .radio-volume-wrap / .radio-volume /
+            .radio-visualizer / .radio-visualizer-bar
+
+       JS radio.js IDs: radioPlayer, radioPanel, radioToggle, radioClosePanel,
+                        radioCover, radioTitle, radioArtist, radioProgress,
+                        radioTimeCur, radioTimeTot, radioPlay, radioPrev,
+                        radioNext, radioShuffle, radioVolume, .radio-visualizer-bar
+       ==================================================== -->
+  <div class="radio-player" id="radioPlayer" style="display:none">
+
+    <!-- Botão flutuante -->
+    <button class="radio-toggle-btn" id="radioToggle" title="Rádio">
+      <i class="fa-solid fa-music"></i>
+    </button>
+
+    <!-- Panel (começa colapsado via JS) -->
+    <div class="radio-panel" id="radioPanel">
+
+      <!-- Header -->
+      <div class="radio-panel-header">
+        <span class="radio-label"><i class="fa-solid fa-radio"></i> Rádio</span>
+        <button id="radioClosePanel" title="Fechar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Info -->
+      <div class="radio-info">
+        <div class="radio-title" id="radioTitle">Nenhuma faixa</div>
+        <div class="radio-artist" id="radioArtist"></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="radio-progress-wrap">
+        <input type="range" class="radio-progress" id="radioProgress" min="0" max="1" step="0.001" value="0" aria-label="Progresso">
+        <div class="radio-time">
+          <span id="radioTimeCur">0:00</span>
+          <span id="radioTimeTot">—</span>
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div class="radio-controls">
+        <button class="radio-btn" id="radioPrev" title="Anterior"><i class="fa-solid fa-backward-step"></i></button>
+        <button class="radio-btn radio-btn-play" id="radioPlay" title="Play/Pause"><i class="fa-solid fa-play"></i></button>
+        <button class="radio-btn" id="radioNext" title="Próxima"><i class="fa-solid fa-forward-step"></i></button>
+        <button class="radio-btn" id="radioShuffle" title="Aleatório"><i class="fa-solid fa-shuffle"></i></button>
+      </div>
+
+      <!-- Volume -->
+      <div class="radio-volume-wrap">
+        <i class="fa-solid fa-volume-low"></i>
+        <input type="range" class="radio-volume" id="radioVolume" min="0" max="1" step="0.01" value="0.75" aria-label="Volume">
+        <i class="fa-solid fa-volume-high"></i>
+      </div>
+
+    </div><!-- /radio-panel -->
+  </div><!-- /radio-player -->
+
+  <!-- ====================================================
+       TOAST
+       ==================================================== -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- ====================================================
+       SCROLL TO TOP
+       ==================================================== -->
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- ====================================================
+       SCRIPTS
+       ==================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+
+  <script src="js/config.js?v=9"></script>
+  <script src="js/modules/utils.js?v=9"></script>
+  <script src="js/modules/theme-engine.js?v=9"></script>
+  <script src="js/modules/animations.js?v=9"></script>
+  <script src="js/modules/splash.js?v=9"></script>
+  <script src="js/modules/navbar.js?v=9"></script>
+  <script src="js/modules/section-renderer.js?v=9"></script>
+  <script src="js/modules/music-reactor.js?v=9"></script>
+  <script src="js/modules/radio.js?v=9"></script>
+  <script src="js/portfolio.js?v=9"></script>
+</body>
+</html>

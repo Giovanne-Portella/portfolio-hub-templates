@@ -1,0 +1,76 @@
+/* === BOTÕES === */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: var(--font-family);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* Primário — usa gradiente do tema */
+.btn-primary {
+  background: var(--gradient);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-1) 40%, transparent);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--color-1) 50%, transparent);
+  color: #fff;
+}
+
+/* Secundário */
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-alt);
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+/* Ghost */
+.btn-ghost {
+  background: transparent;
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--color-1) 40%, transparent);
+}
+
+.btn-ghost:hover {
+  background: color-mix(in srgb, var(--color-1) 10%, transparent);
+  color: var(--primary);
+}
+
+/* Tamanhos */
+.btn-sm { padding: 0.4rem 0.875rem; font-size: 0.8rem; }
+.btn-lg { padding: 0.875rem 2rem; font-size: 1rem; }
+
+/* Ícone circular */
+.btn-icon {
+  padding: 0.5rem;
+  border-radius: var(--radius-full);
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

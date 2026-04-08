@@ -1,0 +1,216 @@
+/* === ADMIN CONTENT AREA === */
+
+.admin-main {
+  flex: 1;
+  margin-left: var(--admin-sidebar-w);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header fixo */
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--admin-header-h);
+  background: color-mix(in srgb, var(--admin-surface) 90%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--admin-border-subtle);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+}
+
+.admin-header-toggle {
+  display: none;
+  color: var(--admin-text-2);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.admin-header-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  flex: 1;
+}
+
+.admin-header-subtitle {
+  font-size: 0.75rem;
+  color: var(--admin-text-muted);
+}
+
+.admin-header-breadcrumb {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  flex: 1;
+}
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Conteúdo da página */
+.admin-page {
+  flex: 1;
+  padding: 1.5rem;
+  display: none;
+}
+
+.admin-page.active { display: block; }
+
+/* Page header */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--admin-text);
+}
+
+.page-subtitle {
+  font-size: 0.85rem;
+  color: var(--admin-text-2);
+  margin-top: 0.25rem;
+}
+
+/* Admin card */
+.admin-card {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* === DASHBOARD === */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color 0.15s;
+}
+
+.stat-card:hover { border-color: var(--admin-primary); }
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--admin-primary) 12%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--admin-primary);
+  flex-shrink: 0;
+}
+
+.stat-info { flex: 1 }
+.stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1; }
+.stat-label { font-size: 0.7rem; color: var(--admin-text-muted); margin-top: 0.2rem; }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dashboard-card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--admin-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.dashboard-card-body { padding: 1.25rem; }
+
+/* === PANEL === */
+
+.admin-panel {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.admin-panel-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--admin-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-panel-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.admin-panel-body { padding: 1.25rem; }
+
+/* === PUBLISH BAR === */
+
+.publish-bar {
+  background: color-mix(in srgb, var(--admin-primary) 10%, var(--admin-surface));
+  border: 1px solid color-mix(in srgb, var(--admin-primary) 25%, var(--admin-border));
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.publish-bar-info { display: flex; align-items: center; gap: 0.75rem; }
+.publish-bar-icon { color: var(--admin-primary); font-size: 1.1rem; }
+.publish-bar-title { font-size: 0.85rem; font-weight: 600; }
+.publish-bar-subtitle { font-size: 0.75rem; color: var(--admin-text-2); }
+
+@media (max-width: 900px) {
+  .admin-main { margin-left: 0; }
+  .admin-page { padding: 1rem; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
