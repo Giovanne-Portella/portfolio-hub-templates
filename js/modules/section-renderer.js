@@ -182,7 +182,7 @@ async function renderGallerySection(el, section, data) {
       return '';
     }).join('');
 
-    itemsHtml = `<div class="gallery-${layout}">${itemsMarkup}</div>`;
+    itemsHtml = itemsMarkup ? `<div class="gallery-${layout}">${itemsMarkup}</div>` : '';
   }
 
   el.innerHTML = `

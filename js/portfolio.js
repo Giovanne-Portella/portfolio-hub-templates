@@ -139,14 +139,14 @@ async function _afterSplash(portfolio, flags) {
   setupNavbar(portfolio, profile, sections);
 
   // 3. Renderiza seções com todos os dados já disponíveis
-  renderSections(sections, {
+  await renderSections(sections, {
     portfolio, profile, flags,
     galleries, galleryItems,
     events, publications, services,
     playlistTracks,
   });
 
-  // Animações de scroll
+  // Animações de scroll — deve rodar APÓS renderSections terminar
   setupAnimations();
 
   // MusicReactor — inicializa se radio ativo e tema configurado
