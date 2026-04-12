@@ -1,61 +1,61 @@
 # Portfolio Hub Templates
 
-A full-stack, multi-tenant portfolio platform built with vanilla JavaScript and [Supabase](https://supabase.com). Each user gets a fully customisable portfolio page served from a single shared frontend.
+Plataforma de portfólio multi-tenant full-stack construída com JavaScript puro e [Supabase](https://supabase.com). Cada usuário recebe uma página de portfólio totalmente personalizável servida a partir de um único frontend compartilhado.
 
 ---
 
-## Features
+## Funcionalidades
 
-| Category | Details |
+| Categoria | Detalhes |
 |---|---|
-| **Templates** | 7 niches: Músico, Banda, Acadêmico, Negócios, Logística, Criativo, Custom |
-| **Sections** | Hero, Bio/Sobre, Galeria, Música, Discografia, Eventos, Publicações, Serviços, Contato, Seção Livre |
-| **Theme Engine** | Dynamic CSS variables — gradient, solid or multi-color; 4 font families; 3 border-radius modes |
-| **Radio Player** | Hybrid player supporting MP3 files (Web Audio API + visualiser) and YouTube embeds |
-| **Splash Screen** | 6 animated intro styles: Elegant, Glitch, Cinematic, Particles, Terminal, Minimal |
-| **Music Reactor** | Real-time color pulse driven by audio frequency data |
-| **Admin Panel** | Full CRUD for all content types, drag-and-drop section builder, live theme preview |
-| **Media Library** | Supabase Storage upload with drag-and-drop; video preview thumbnails |
-| **Auth** | Supabase email/password authentication with password-confirm on register |
+| **Templates** | 7 nichos: Músico, Banda, Acadêmico, Negócios, Logística, Criativo, Custom |
+| **Seções** | Hero, Bio/Sobre, Galeria, Música, Discografia, Eventos, Publicações, Serviços, Contato, Seção Livre |
+| **Motor de Tema** | Variáveis CSS dinâmicas — gradiente, sólido ou multicor; 4 famílias de fontes; 3 modos de borda arredondada |
+| **Rádio Player** | Player híbrido com suporte a arquivos MP3 (Web Audio API + visualizador) e embeds do YouTube |
+| **Splash Screen** | 6 estilos de intro animada: Elegante, Glitch, Cinemático, Partículas, Terminal, Minimalista |
+| **Music Reactor** | Pulso de cor em tempo real controlado por dados de frequência de áudio |
+| **Painel Admin** | CRUD completo para todos os tipos de conteúdo, construtor de seções com arrastar e soltar, prévia de tema ao vivo |
+| **Biblioteca de Mídia** | Upload via Supabase Storage com arrastar e soltar; miniaturas de prévia de vídeo |
+| **Autenticação** | Autenticação Supabase com e-mail e senha; confirmação de senha no cadastro |
 
 ---
 
-## Tech Stack
+## Stack Tecnológica
 
-- **Frontend**: Vanilla HTML + CSS + JavaScript (no framework)
-- **Backend/Database**: [Supabase](https://supabase.com) (PostgreSQL + Auth + Storage)
-- **Hosting**: [Netlify](https://netlify.com) (static, `netlify.toml` included)
-- **CDN dependencies**: Supabase JS v2, Font Awesome 6.5, Google Fonts, marked.js, DOMPurify
+- **Frontend**: HTML + CSS + JavaScript puro (sem framework)
+- **Backend/Banco de Dados**: [Supabase](https://supabase.com) (PostgreSQL + Auth + Storage)
+- **Hospedagem**: [Netlify](https://netlify.com) (estático, `netlify.toml` incluído)
+- **Dependências CDN**: Supabase JS v2, Font Awesome 6.5, Google Fonts, marked.js, DOMPurify
 
 ---
 
-## Project Structure
+## Estrutura do Projeto
 
 ```
 portfolio-hub-templates/
-├── index.html              # Public portfolio page
-├── netlify.toml            # Netlify deploy config
-├── supabase-schema.sql     # Initial database schema
-├── supabase-migration-v2.sql # Schema migration
+├── index.html              # Página pública do portfólio
+├── netlify.toml            # Configuração de deploy Netlify
+├── supabase-schema.sql     # Schema inicial do banco de dados
+├── supabase-migration-v2.sql # Migração do schema
 ├── favicon.svg
 │
 ├── admin/
-│   ├── index.html          # Admin panel
-│   └── login.html          # Auth page (login + register)
+│   ├── index.html          # Painel administrativo
+│   └── login.html          # Página de auth (login + cadastro)
 │
 ├── css/
-│   ├── style.css           # Public portfolio styles
-│   ├── admin.css           # Admin panel main stylesheet
-│   ├── admin/              # Admin component partials
-│   └── modules/            # Public portfolio CSS modules
+│   ├── style.css           # Estilos do portfólio público
+│   ├── admin.css           # Stylesheet principal do painel admin
+│   ├── admin/              # Parciais de componentes admin
+│   └── modules/            # Módulos CSS do portfólio público
 │
 └── js/
-    ├── config.js           # Supabase client initialisation
-    ├── auth.js             # Admin auth guard
-    ├── admin.js            # Admin entry point + navigation
-    ├── portfolio.js        # Public portfolio entry point
-    ├── admin/              # Admin feature modules
-    │   ├── core.js         # Shared utilities (toast, modal, upload…)
+    ├── config.js           # Inicialização do cliente Supabase
+    ├── auth.js             # Guard de autenticação admin
+    ├── admin.js            # Ponto de entrada admin + navegação
+    ├── portfolio.js        # Ponto de entrada do portfólio público
+    ├── admin/              # Módulos de funcionalidades admin
+    │   ├── core.js         # Utilitários compartilhados (toast, modal, upload…)
     │   ├── profile.js
     │   ├── section-builder.js
     │   ├── theme-editor.js
@@ -66,96 +66,96 @@ portfolio-hub-templates/
     │   ├── services-manager.js
     │   ├── splash-manager.js
     │   └── media-library.js
-    └── modules/            # Public portfolio modules
+    └── modules/            # Módulos do portfólio público
         ├── utils.js        # Helpers: escapeHtml, slugify, formatDuration…
-        ├── theme-engine.js # CSS variable injection
+        ├── theme-engine.js # Injeção de variáveis CSS
         ├── animations.js   # IntersectionObserver reveal + scroll-top
-        ├── splash.js       # Splash screen styles
-        ├── navbar.js       # Navbar + mobile drawer + active link
-        ├── section-renderer.js # Renders all section types
-        ├── radio.js        # Hybrid MP3/YouTube player (IIFE)
-        ├── music-reactor.js # Audio-reactive visual effects
+        ├── splash.js       # Estilos da splash screen
+        ├── navbar.js       # Navbar + gaveta mobile + link ativo
+        ├── section-renderer.js # Renderiza todos os tipos de seção
+        ├── radio.js        # Player híbrido MP3/YouTube (IIFE)
+        ├── music-reactor.js # Efeitos visuais reativos ao áudio
         └── utils.js
 ```
 
 ---
 
-## Getting Started
+## Como Começar
 
-### 1. Supabase Setup
+### 1. Configurar o Supabase
 
-1. Create a project at [supabase.com](https://supabase.com).
-2. Run `supabase-schema.sql` in the Supabase SQL editor, then `supabase-migration-v2.sql`.
-3. In **Storage**, create a public bucket named `media` and one named `avatars`.
-4. Enable **Email Auth** in Authentication → Providers.
+1. Crie um projeto em [supabase.com](https://supabase.com).
+2. Execute `supabase-schema.sql` no editor SQL do Supabase, depois `supabase-migration-v2.sql` e `supabase-migration-v3.sql`.
+3. Em **Storage**, crie um bucket público chamado `media` e outro chamado `avatars`.
+4. Ative o **E-mail Auth** em Authentication → Providers.
 
-### 2. Configure credentials
+### 2. Configurar as credenciais
 
-Edit `js/config.js` and replace the placeholder values:
+Edite `js/config.js` e substitua os valores de exemplo:
 
 ```js
-const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+const SUPABASE_URL = 'https://SEU_PROJETO.supabase.co';
+const SUPABASE_ANON_KEY = 'SUA_ANON_KEY';
 ```
 
-### 3. Deploy to Netlify
+### 3. Deploy no Netlify
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start)
 
-Or manually:
+Ou manualmente:
 
 ```bash
-# Drag-and-drop the folder in the Netlify dashboard, or:
+# Arraste a pasta para o dashboard do Netlify, ou:
 netlify deploy --prod --dir .
 ```
 
-The `netlify.toml` already includes the redirect rule that makes pretty URL paths like `/p/my-slug` work.
+O `netlify.toml` já inclui a regra de redirecionamento que faz as URLs amigáveis como `/p/meu-slug` funcionarem.
 
-### 4. First login
+### 4. Primeiro login
 
-Navigate to `/admin/login.html`, create an account, and start building your portfolio.
+Acesse `/admin/login.html`, crie uma conta e comece a montar seu portfólio.
 
 ---
 
-## Public Portfolio URL
+## URL Pública do Portfólio
 
-| Pattern | Description |
+| Padrão | Descrição |
 |---|---|
-| `/?slug=my-slug` | Portfolio by slug |
-| `/p/my-slug` | Pretty URL (requires Netlify redirect) |
+| `/?slug=meu-slug` | Portfólio pelo slug |
+| `/p/meu-slug` | URL amigável (requer redirecionamento Netlify) |
 
-Set your slug at **Admin → Configurações**.
+Defina seu slug em **Admin → Configurações**.
 
 ---
 
-## Admin Sections
+## Seções do Admin
 
-| Page | Hash | Description |
+| Página | Hash | Descrição |
 |---|---|---|
-| Dashboard | `#dashboard` | Stats, template badge, public URL |
-| Template | `#setup` | Choose a template preset |
-| Mapa de Seções | `#sections` | Drag-and-drop section builder |
-| Tema e Cores | `#theme` | Live theme preview + color picker |
-| Perfil / Bio | `#profile` | Name, tagline, bio, avatar, social links |
-| Biblioteca de Mídia | `#media` | Upload & manage files |
-| Galerias | `#gallery` | Create galleries, reorder items |
-| Rádio / Músicas | `#radio` | Playlists with MP3 or YouTube tracks |
-| Eventos | `#events` | Event cards with date, location, tickets |
-| Publicações | `#publications` | Articles, books, theses, DOI links |
-| Serviços | `#services` | Service cards with features and price |
-| Modal de Boas-vindas | `#splash` | Splash screen config + live preview |
-| Configurações | `#settings` | Slug, name, publish toggle |
+| Dashboard | `#dashboard` | Estatísticas, badge do template, URL pública |
+| Template | `#setup` | Escolher um preset de template |
+| Mapa de Seções | `#sections` | Construtor de seções com arrastar e soltar |
+| Tema e Cores | `#theme` | Prévia de tema ao vivo + seletor de cores |
+| Perfil / Bio | `#profile` | Nome, tagline, bio, avatar, redes sociais |
+| Biblioteca de Mídia | `#media` | Upload e gerenciamento de arquivos |
+| Galerias | `#gallery` | Criar galerias e reordenar itens |
+| Rádio / Músicas | `#radio` | Playlists com faixas MP3 ou YouTube |
+| Eventos | `#events` | Cards de eventos com data, local e ingressos |
+| Publicações | `#publications` | Artigos, livros, teses, links DOI |
+| Serviços | `#services` | Cards de serviços com recursos e preço |
+| Modal de Boas-vindas | `#splash` | Configuração da splash screen + prévia ao vivo |
+| Configurações | `#settings` | Slug, nome, toggle de publicação |
 
 ---
 
-## Environment Notes
+## Observações de Ambiente
 
-- **Row Level Security (RLS)** must be enabled on all Supabase tables. Each user can only read/write their own data.
-- The `config.js` file is committed with the `anon` key (safe for client-side use), but you should **never expose the `service_role` key**.
-- The contact form uses a `mailto:` link as fallback; to handle messages server-side, add a Supabase Edge Function or a form service like Formspree.
+- **Row Level Security (RLS)** deve estar ativado em todas as tabelas do Supabase. Cada usuário só pode ler/escrever seus próprios dados.
+- O arquivo `config.js` é versionado com a chave `anon` (seguro para uso no cliente), mas **nunca exponha a chave `service_role`**.
+- O formulário de contato usa um link `mailto:` como fallback; para processar mensagens no servidor, adicione uma Edge Function do Supabase ou um serviço como o Formspree.
 
 ---
 
-## License
+## Licença
 
-MIT — see [LICENSE](LICENSE).
+MIT — veja [LICENSE](LICENSE).
