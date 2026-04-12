@@ -23,7 +23,7 @@ async function _fetchGalleries() {
   if (ids.length) {
     const { data: items } = await supabase
       .from('gallery_items')
-      .select('*, media_files(id, file_url, thumbnail_url, file_name, file_type), video_thumbnail_url')
+      .select('*, media_files(id, file_url, thumbnail_url, file_name, file_type)')
       .in('gallery_id', ids)
       .order('display_order');
 
@@ -265,7 +265,7 @@ function _openItemsManager(galleryId) {
         gallery_id: galleryId,
         media_id: media.id,
         display_order: items.length
-      }).select('*, media_files(id, file_url, thumbnail_url, file_name, file_type), video_thumbnail_url').single();
+      }).select('*, media_files(id, file_url, thumbnail_url, file_name, file_type)').single();
 
       if (!error) {
         galleryItems[galleryId] = [...items, data];

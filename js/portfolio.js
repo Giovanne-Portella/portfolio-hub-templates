@@ -108,7 +108,7 @@ async function _afterSplash(portfolio, flags) {
       const ids = galleries.map(g => g.id);
       const { data: items } = await supabase
         .from('gallery_items')
-        .select('*, video_thumbnail_url, media:media_files(id, file_url, thumbnail_url, file_name, file_type)')
+        .select('*, media:media_files(id, file_url, thumbnail_url, file_name, file_type)')
         .in('gallery_id', ids)
         .order('display_order');
       (items || []).forEach(item => {
