@@ -428,6 +428,17 @@ const Radio = (() => {
     return audioEl && !audioEl.paused;
   }
 
+  /**
+   * Salta para a faixa pelo índice e inicia a reprodução.
+   * Usado pela seção de música/discografia no portfolio público.
+   */
+  function jumpToTrack(idx) {
+    if (idx < 0 || idx >= tracks.length) return;
+    _loadTrack(idx, true);
+    // Abre o panel se estiver fechado
+    if (el.panel) el.panel.classList.remove('collapsed');
+  }
+
   function _updatePlayBtn(playing) {
     if (!el.playBtn) return;
     el.playBtn.innerHTML = playing
@@ -435,5 +446,5 @@ const Radio = (() => {
       : '<i class="fa-solid fa-play"></i>';
   }
 
-  return { init, togglePlay, prev, next, isPlaying };
+  return { init, togglePlay, prev, next, isPlaying, jumpToTrack };
 })();

@@ -35,9 +35,8 @@ async function renderSections(sections, portfolioData) {
     container.appendChild(el);
   }
 
-  // Setup intersection observer for reveal animations
-  _setupReveal();
-  _setupScrollTop();
+  // Reveal & scroll-top are handled by setupAnimations() called in portfolio.js
+  // No duplicate setup needed here.
 }
 
 function _setupReveal() {
@@ -242,8 +241,8 @@ async function renderMusicSection(el, section, data) {
   // Clique numa faixa aciona o rádio
   el.querySelectorAll('.music-track-item').forEach((item, i) => {
     const play = () => {
-      if (typeof Radio !== 'undefined') {
-        Radio._loadTrackPublic ? Radio._loadTrackPublic(i) : null;
+      if (typeof Radio !== 'undefined' && typeof Radio.jumpToTrack === 'function') {
+        Radio.jumpToTrack(i);
       }
     };
     item.addEventListener('click', play);
@@ -289,6 +288,17 @@ async function renderDiscographySection(el, section, data) {
           : '<div class="empty-state"><i class="fa-solid fa-record-vinyl"></i><p>Nenhum álbum adicionado.</p></div>'}
       </div>
     </section>`;
+
+  // Wire play buttons on discography cards
+  el.querySelectorAll('.disc-card').forEach((card, i) => {
+    const play = () => {
+      if (typeof Radio !== 'undefined' && typeof Radio.jumpToTrack === 'function') {
+        Radio.jumpToTrack(i);
+      }
+    };
+    card.querySelector('.disc-card-play')?.addEventListener('click', (e) => { e.stopPropagation(); play(); });
+    card.addEventListener('click', play);
+  });
 }
 
 /* ============================================================
@@ -450,9 +460,20 @@ async function renderContactSection(el, section, data) {
 
   const form = el.querySelector('#contactForm');
   if (form) {
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      showToast('Obrigado! Mensagem enviada.', 'success');
+      const name    = form.querySelector('[name=name]')?.value.trim()    || '';
+      const email   = form.querySelector('[name=email]')?.value.trim()   || '';
+      const message = form.querySelector('[name=message]')?.value.trim() || '';
+      const to      = data.profile?.email;
+
+      if (to) {
+        const subject = encodeURIComponent(`Contato via portfólio — ${name}`);
+        const body    = encodeURIComponent(`${message}\n\n---\nDe: ${name} <${email}>`);
+        window.open(`mailto:${to}?subject=${subject}&body=${body}`, '_blank');
+      }
+
+      showToast('Obrigado! Sua mensagem foi preparada.', 'success');
       form.reset();
     });
   }
@@ -496,18 +517,31 @@ function _setupLightbox(container) {
   const items = container.querySelectorAll('[data-lightbox]');
   if (items.length === 0) return;
 
-  const lb = document.createElement('div');
-  lb.className = 'lightbox-overlay';
-  lb.innerHTML = `
-    <button class="lightbox-close"><i class="fa-solid fa-xmark"></i></button>
-    <button class="lightbox-prev"><i class="fa-solid fa-chevron-left"></i></button>
-    <button class="lightbox-next"><i class="fa-solid fa-chevron-right"></i></button>
-    <div class="lightbox-content" id="lbContent"></div>`;
-  document.body.appendChild(lb);
+  // Reuse or create a single lightbox overlay to avoid DOM accumulation
+  let lb = document.getElementById('globalLightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'globalLightbox';
+    lb.className = 'lightbox-overlay';
+    lb.innerHTML = `
+      <button class="lightbox-close"><i class="fa-solid fa-xmark"></i></button>
+      <button class="lightbox-prev"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="lightbox-next"><i class="fa-solid fa-chevron-right"></i></button>
+      <div class="lightbox-content" id="lbContent"></div>`;
+    document.body.appendChild(lb);
+
+    // Global keyboard handler — only one listener needed
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape')     _lbClose(lb);
+      if (e.key === 'ArrowLeft')  lb._prev?.();
+      if (e.key === 'ArrowRight') lb._next?.();
+    });
+  }
 
   const lbContent = lb.querySelector('#lbContent');
   let current = 0;
-  const srcs = Array.from(items).map(i => ({ src: i.dataset.src, type: i.dataset.type || 'image', caption: i.dataset.caption || '' }));
+  let srcs = [];
 
   function open(idx) {
     current = idx;
@@ -519,23 +553,25 @@ function _setupLightbox(container) {
     document.body.style.overflow = 'hidden';
   }
 
-  function close() {
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-    lbContent.innerHTML = '';
-  }
+  // Expose navigate functions for keyboard handler
+  lb._prev = () => open((current - 1 + srcs.length) % srcs.length);
+  lb._next = () => open((current + 1) % srcs.length);
 
-  items.forEach((item, i) => item.addEventListener('click', () => open(i)));
-  lb.querySelector('.lightbox-close').addEventListener('click', close);
-  lb.querySelector('.lightbox-prev').addEventListener('click', () => open((current - 1 + srcs.length) % srcs.length));
-  lb.querySelector('.lightbox-next').addEventListener('click', () => open((current + 1) % srcs.length));
-  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
-  document.addEventListener('keydown', (e) => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape')     close();
-    if (e.key === 'ArrowLeft')  open((current - 1 + srcs.length) % srcs.length);
-    if (e.key === 'ArrowRight') open((current + 1) % srcs.length);
-  });
+  // Re-register click source items for this container (overrides previous containers)
+  srcs = Array.from(items).map(i => ({ src: i.dataset.src, type: i.dataset.type || 'image', caption: i.dataset.caption || '' }));
+  items.forEach((item, i) => item.addEventListener('click', () => { srcs = Array.from(container.querySelectorAll('[data-lightbox]')).map(it => ({ src: it.dataset.src, type: it.dataset.type || 'image', caption: it.dataset.caption || '' })); open(i); }));
+
+  lb.querySelector('.lightbox-close').onclick  = () => _lbClose(lb);
+  lb.querySelector('.lightbox-prev').onclick   = () => lb._prev();
+  lb.querySelector('.lightbox-next').onclick   = () => lb._next();
+  lb.addEventListener('click', (e) => { if (e.target === lb) _lbClose(lb); });
+}
+
+function _lbClose(lb) {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+  const c = lb.querySelector('#lbContent');
+  if (c) c.innerHTML = '';
 }
 
 /* ============================================================
