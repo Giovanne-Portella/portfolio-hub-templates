@@ -146,9 +146,6 @@ async function _afterSplash(portfolio, flags) {
     playlistTracks,
   });
 
-  // Animações de scroll — deve rodar APÓS renderSections terminar
-  setupAnimations();
-
   // MusicReactor — inicializa se radio ativo e tema configurado
   if (flags.radio && portfolio.theme_config?.musicReactor !== false) {
     const theme = portfolio.theme_config || {};
@@ -158,9 +155,16 @@ async function _afterSplash(portfolio, flags) {
     });
   }
 
-  // Revela a página — só aqui, após tudo renderizado, para evitar flash de elementos vazios
+  // Revela a página — deve vir ANTES de setupAnimations para que #sections-root
+  // seja visibility:visible quando o IntersectionObserver registrar os elementos.
+  // Com visibility:hidden no pai, o observer vê intersectionRatio=0 e nunca
+  // adiciona a classe .visible nos elementos .reveal.
   document.body.classList.remove('site-loading');
   document.body.classList.add('site-loaded');
+
+  // Animações de scroll — roda DEPOIS de site-loaded para garantir que os
+  // elementos .reveal estejam visíveis no momento em que o observer é criado.
+  requestAnimationFrame(() => setupAnimations());
 }
 
 function _buildTracks(playlist) {
